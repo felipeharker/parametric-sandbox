@@ -1,16 +1,26 @@
+"""
+Creates a grid of rectangular panels that perfectly fit within a bounding curve.
+
+Inputs:
+    boundary: Geometry (item access, crv)
+    sheet_x: Number (item access, float)
+    sheet_y: Number (item access, float)
+    use_world_xy: Boolean (item access, bool)
+
+Outputs:
+    panels: List of Curves (The rectangular panels)
+"""
+
+try:
+    ghenv.Component.Name = "BoundPanel"
+    ghenv.Component.NickName = "BPanel"
+    ghenv.Component.Description = "Creates a grid of rectangular panels that perfectly fit within a bounding curve."
+except NameError:
+    pass
+
 import Rhino
 import scriptcontext as sc
 from Rhino.Geometry import Plane, Rectangle3d, Interval
-
-# Inputs:
-#   Bnd        : Curve
-#   SheetX     : float
-#   SheetY     : float
-#   UseWorldXY : bool
-#
-# Output:
-#   Panels     : list[Curve]
-
 
 def _doc_tol():
     if sc.doc:
@@ -19,14 +29,7 @@ def _doc_tol():
         return Rhino.RhinoDoc.ActiveDoc.ModelAbsoluteTolerance
     return 1e-3
 
-
 def sizes_1d(L, S, tol):
-    """
-    Fills length L with:
-    - as many full sheets S as possible
-    - remainder split equally into two end caps
-    - full sheets centered between caps
-    """
     if S <= tol:
         return [L]
 
@@ -43,30 +46,25 @@ def sizes_1d(L, S, tol):
 
     return [cap] + ([S] * n_full) + [cap]
 
+panels = []
 
-Panels = []
-
-if Bnd is None:
-    Panels = []
-else:
+if 'boundary' in globals() and boundary is not None:
     tol = _doc_tol()
 
-    # Choose working plane
-    if UseWorldXY:
+    if 'use_world_xy' in globals() and use_world_xy:
         pl = Plane.WorldXY
     else:
-        ok, pl = Bnd.TryGetPlane(tol)
+        ok, pl = boundary.TryGetPlane(tol)
         if not ok:
             pl = Plane.WorldXY
 
-    # Bounding box in chosen plane
-    bb = Bnd.GetBoundingBox(pl)
+    bb = boundary.GetBoundingBox(pl)
 
     Lx = bb.Max.X - bb.Min.X
     Ly = bb.Max.Y - bb.Min.Y
 
-    x_sizes = sizes_1d(Lx, float(SheetX), tol)
-    y_sizes = sizes_1d(Ly, float(SheetY), tol)
+    x_sizes = sizes_1d(Lx, float(sheet_x), tol)
+    y_sizes = sizes_1d(Ly, float(sheet_y), tol)
 
     x0 = bb.Min.X
     for sx in x_sizes:
@@ -77,6 +75,6 @@ else:
                 Interval(x0, x0 + sx),
                 Interval(y0, y0 + sy)
             )
-            Panels.append(rect.ToNurbsCurve())
+            panels.append(rect.ToNurbsCurve())
             y0 += sy
         x0 += sx

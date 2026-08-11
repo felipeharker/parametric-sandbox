@@ -10,7 +10,7 @@ Outputs:
 
 try:
     ghenv.Component.Name = "PatternSelector"
-    ghenv.Component.NickName = "PattSel"
+    ghenv.Component.NickName = "PSel"
     ghenv.Component.Description = "Selects a 7-bit combination pattern based on an index."
 except NameError:
     pass

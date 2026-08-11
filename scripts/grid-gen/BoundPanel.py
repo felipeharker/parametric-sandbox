@@ -3,8 +3,8 @@ Creates a grid of rectangular panels that perfectly fit within a bounding curve.
 
 Inputs:
     boundary: Geometry (item access, crv)
-    sheet_x: Number (item access, float)
-    sheet_y: Number (item access, float)
+    size_x: Number (item access, float)
+    size_y: Number (item access, float)
     use_world_xy: Boolean (item access, bool)
 
 Outputs:
@@ -63,8 +63,8 @@ if 'boundary' in globals() and boundary is not None:
     Lx = bb.Max.X - bb.Min.X
     Ly = bb.Max.Y - bb.Min.Y
 
-    x_sizes = sizes_1d(Lx, float(sheet_x), tol)
-    y_sizes = sizes_1d(Ly, float(sheet_y), tol)
+    x_sizes = sizes_1d(Lx, float(size_x), tol)
+    y_sizes = sizes_1d(Ly, float(size_y), tol)
 
     x0 = bb.Min.X
     for sx in x_sizes:

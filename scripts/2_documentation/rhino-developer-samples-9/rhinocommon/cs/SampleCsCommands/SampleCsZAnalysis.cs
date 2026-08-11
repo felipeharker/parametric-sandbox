@@ -1,0 +1,298 @@
+﻿using Rhino;
+using Rhino.Commands;
+using Rhino.Display;
+using Rhino.DocObjects;
+using Rhino.Geometry;
+using Rhino.Input;
+using Rhino.Render;
+using System;
+using System.Drawing;
+using System.Runtime.InteropServices;
+
+namespace SampleCsCommands
+{
+  /// <summary>
+  /// SampleCsZAnalysisOn command
+  /// </summary>
+  public class SampleCsZAnalysisOn : Command
+  {
+    public override string EnglishName => "SampleCsZAnalysisOn";
+
+    protected override Result RunCommand(RhinoDoc doc, RunMode mode)
+    {
+      VisualAnalysisMode analysis_mode = VisualAnalysisMode.Find(typeof(SampleCsZAnalysisMode));
+      if (null == analysis_mode)
+        analysis_mode = VisualAnalysisMode.Register(typeof(SampleCsZAnalysisMode));
+      if (null == analysis_mode)
+      {
+        RhinoApp.WriteLine("Unable to register Z-Analysis mode.");
+        return Result.Failure;
+      }
+
+      const ObjectType filter = ObjectType.Surface | ObjectType.PolysrfFilter | ObjectType.Mesh;
+      Result rc = RhinoGet.GetMultipleObjects("Select objects for Z analysis", false, filter, out ObjRef[] obj_refs);
+      if (rc != Result.Success)
+        return rc;
+
+      int count = 0;
+      foreach (ObjRef obj_ref in obj_refs)
+      {
+        RhinoObject obj = obj_ref.Object();
+
+        // see if this object is already in Z-Analysis mode
+        if (obj.InVisualAnalysisMode(analysis_mode))
+          continue;
+
+        if (obj.EnableVisualAnalysisMode(analysis_mode, true))
+          count++;
+      }
+
+      doc.Views.Redraw();
+      RhinoApp.WriteLine("{0} object(s) set into Z-Analysis mode.", count);
+
+      return Result.Success;
+    }
+  }
+
+  /// <summary>
+  /// SampleCsZAnalysisOff command
+  /// </summary>
+  public class SampleCsZAnalysisOff : Command
+  {
+    public override string EnglishName => "SampleCsZAnalysisOff";
+
+    protected override Result RunCommand(RhinoDoc doc, RunMode mode)
+    {
+      VisualAnalysisMode analysis_mode = VisualAnalysisMode.Find(typeof(SampleCsZAnalysisMode));
+      if (analysis_mode != null)
+      {
+        foreach (RhinoObject obj in doc.Objects)
+          obj.EnableVisualAnalysisMode(analysis_mode, false);
+        doc.Views.Redraw();
+      }
+      RhinoApp.WriteLine("Z-Analysis is off.");
+      return Result.Success;
+    }
+  }
+
+  /// <summary>
+  /// This simple example provides a false color based on the world z-coordinate.
+  /// For details, see the implementation of the FalseColor() function.
+  /// </summary>
+  [Guid("AAD83C88-6BBE-4F76-BF2C-B06E63B529B6")]
+  public class SampleCsZAnalysisMode : VisualAnalysisMode
+  {
+    private Interval m_z_range = new Interval(-10.0, 10.0);
+    private Interval m_hue_range = new Interval(0.0, 4.0 * Math.PI / 3.0); // red to green to blue
+
+    /// <inheritdoc />
+    public override string Name => "Z-Analysis";
+
+    /// <inheritdoc />
+    public override AnalysisStyle Style => AnalysisStyle.FalseColor;
+
+    /// <inheritdoc />
+    public override bool ObjectSupportsAnalysisMode(RhinoObject obj)
+    {
+      // This function should return true if the analysis mode works
+      // on the object.  This example works on meshes and breps, so
+      // its version of ObjectSupportsAnalysisMode looks like this.
+      switch (obj.ObjectType)
+      {
+        case ObjectType.Brep:
+        case ObjectType.Extrusion:
+        case ObjectType.Mesh:
+        case ObjectType.Surface:
+          return true;
+      }
+      return false;
+    }
+
+    /// <inheritdoc />
+    protected override void UpdateVertexColors(RhinoObject obj, Mesh[] meshes)
+    {
+      // Rhino calls this function when it is time for you
+      // to set the false colors on the analysis mesh vertices.
+      // For breps, there is one mesh per face.  For mesh objects,
+      // there is a single mesh.
+      int count = null != meshes ? meshes.Length : 0;
+      if (count > 0)
+      {
+        // A "mapping tag" is used to determine if the colors need to be set
+        MappingTag mt = GetMappingTag();
+        for (int mi = 0; mi < count; mi++)
+        {
+          Mesh mesh = meshes[mi];
+          if (null != mesh && 0 != CompareMappingTags(mesh.VertexColors.Tag, mt))
+          {
+            // The mesh's mapping tag is different from ours. Either the mesh has
+            // no false colors, has false colors set by another analysis mode, has
+            // false colors set using different m_z_range[]/m_hue_range[] values, or
+            // the mesh has been moved.  In any case, we need to set the false
+            // colors to the ones we want.
+            Color[] colors = new Color[mesh.Vertices.Count];
+            for (int vi = 0; vi < mesh.Vertices.Count; vi++)
+            {
+              double z = mesh.Vertices[vi].Z;
+              colors[vi] = FalseColor(z);
+            }
+            mesh.VertexColors.SetColors(colors);
+            // set the mesh's color tag
+            mesh.VertexColors.Tag = mt;
+          }
+        }
+      }
+    }
+
+    /// <inheritdoc />
+    public override bool ShowIsoCurves => true;
+
+    /// <summary>
+    /// Returns a mapping tag that is used to detect when a mesh's colors need to be set.
+    /// </summary>
+    private MappingTag GetMappingTag()
+    {
+      MappingTag mt = new MappingTag
+      {
+        // Since the false colors that are shown will change if
+        // the mesh is transformed, we have to initialize the
+        // transformation.
+        MeshTransform = Transform.Identity,
+
+        // This is the analysis mode id passed to the 
+        // SampleCsZAnalysisMode attributes. Use the
+        // ID member and it this code will always 
+        // work correctly.
+        Id = Id
+      };
+
+      // This is a 32 bit CRC or the information used to
+      // set the false colors.
+
+      // For this example, the m_z_range and m_hue_range 
+      // intervals control the colors, so we calculate 
+      // their crc.
+      uint crc = 0;
+      crc = RhinoMath.CRC32(crc, m_z_range.T0);
+      crc = RhinoMath.CRC32(crc, m_z_range.T1);
+      crc = RhinoMath.CRC32(crc, m_hue_range.T0);
+      crc = RhinoMath.CRC32(crc, m_hue_range.T1);
+      mt.MappingCRC = crc;
+
+      return mt;
+    }
+
+    /// <summary>
+    /// Compares two mapping tags
+    /// </summary>
+    private static int CompareMappingTags(MappingTag lhs, MappingTag rhs)
+    {
+      TextureMappingType lhs_type = lhs.MappingType;
+      TextureMappingType rhs_type = rhs.MappingType;
+      if (lhs_type < rhs_type)
+        return -1;
+      if (lhs_type > rhs_type)
+        return 1;
+      int rc = lhs.Id.CompareTo(rhs.Id);
+      if (0 != rc)
+        return rc;
+      if (lhs.MappingCRC < rhs.MappingCRC)
+        return -1;
+      if (lhs.MappingCRC > rhs.MappingCRC)
+        return 1;
+      return lhs.MeshTransform.CompareTo(rhs.MeshTransform);
+    }
+
+    /// <summary>
+    /// Calculate false color.
+    /// </summary>
+    private Color FalseColor(double z)
+    {
+      // Simple example of one way to change a number into a color.
+      double s = m_z_range.NormalizedParameterAt(z);
+      s = RhinoMath.Clamp(s, 0.0, 1.0);
+      double hue = m_hue_range.ParameterAt(s);
+      return ColorFromHsv(hue, 1.0, 1.0);
+    }
+
+    /// <summary>
+    /// Returns a color from an hue, saturation, value.
+    /// </summary>
+    /// <param name="hue">Hue in radians.</param>
+    /// <param name="saturation">Satuation, where 0.0 = gray, 1.0 = saturated.</param>
+    /// <param name="value">The value.</param>
+    /// <returns>The color.</returns>
+    private static Color ColorFromHsv(double hue, double saturation, double value)
+    {
+      double r, g, b;
+      if (saturation <= 1.0 / 256.0)
+      {
+        r = value;
+        g = value;
+        b = value;
+      }
+      else
+      {
+        hue *= 3.0 / Math.PI;  // (6.0 / 2.0 * ON_PI);
+        int i = (int)Math.Floor(hue);
+        if (i < 0 || i > 5)
+        {
+          hue = hue % 6.0;
+          if (hue < 0.0)
+            hue += 6.0;
+          i = (int)Math.Floor(hue);
+        }
+        double f = hue - i;
+        double p = value * (1.0 - saturation);
+        double q = value * (1.0 - (saturation * f));
+        double t = value * (1.0 - (saturation * (1.0 - f)));
+        switch (i)
+        {
+          case 0:
+            r = value; g = t; b = p; break;
+          case 1:
+            r = q; g = value; b = p; break;
+          case 2:
+            r = p; g = value; b = t; break;
+          case 3:
+            r = p; g = q; b = value; break;
+          case 4:
+            r = t; g = p; b = value; break;
+          case 5:
+            r = value; g = p; b = q; break;
+          default:
+            r = 0; g = 0; b = 0; break;
+        }
+      }
+      return ColorFromFractionalArgb(0.0, r, g, b);
+    }
+
+    /// <summary>
+    /// Returns a color from fractional argb values.
+    /// </summary>
+    private static Color ColorFromFractionalArgb(double alpha, double red, double green, double blue)
+    {
+      if (red < 0.0) red = 0.0; else if (red > 1.0) red = 1.0;
+      if (green < 0.0) green = 0.0; else if (green > 1.0) green = 1.0;
+      if (blue < 0.0) blue = 0.0; else if (blue > 1.0) blue = 1.0;
+      if (alpha < 0.0) alpha = 0.0; else if (alpha > 1.0) alpha = 1.0;
+
+      red *= 255.0;
+      green *= 255.0;
+      blue *= 255.0;
+      alpha *= 255.0;
+
+      int r = (int)red;
+      int g = (int)green;
+      int b = (int)blue;
+      int a = (int)alpha;
+
+      if (red - r >= 0.5) r++;
+      if (green - g >= 0.5) g++;
+      if (blue - b >= 0.5) b++;
+      if (alpha - a >= 0.5) a++;
+
+      return Color.FromArgb(a, r, g, b);
+    }
+  }
+}

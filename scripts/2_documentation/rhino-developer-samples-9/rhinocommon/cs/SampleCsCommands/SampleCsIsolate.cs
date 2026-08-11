@@ -1,0 +1,53 @@
+﻿using Rhino;
+using Rhino.Commands;
+using Rhino.DocObjects;
+using Rhino.Input.Custom;
+
+namespace SampleCsCommands
+{
+  public class SampleCsIsolate : Command
+  {
+    public override string EnglishName => "SampleCsIsolate";
+
+    protected override Result RunCommand(RhinoDoc doc, RunMode mode)
+    {
+      GetObject go = new GetObject();
+      go.SetCommandPrompt("Select objects to isolate");
+      go.GroupSelect = true;
+      go.SubObjectSelect = false;
+      go.GetMultiple(1, 0);
+      if (go.CommandResult() != Result.Success)
+        return go.CommandResult();
+
+      for (int i = 0; i < go.ObjectCount; i++)
+      {
+        RhinoObject obj = go.Object(i).Object();
+        if (null != obj)
+          obj.Select(true);
+      }
+
+      doc.Views.RedrawEnabled = false;
+
+      RhinoApp.RunScript("_-Invert", false);
+
+      string script = string.Format("_-Hide {0}", SampleCsCommandsPlugIn.Instance.IsolateIndex);
+      RhinoApp.RunScript(script, false);
+
+      SampleCsCommandsPlugIn.Instance.IsolateIndex++;
+
+      if (go.ObjectsWerePreselected)
+      {
+        for (int i = 0; i < go.ObjectCount; i++)
+        {
+          RhinoObject obj = go.Object(i).Object();
+          if (null != obj)
+            obj.Select(true);
+        }
+      }
+
+      doc.Views.RedrawEnabled = true;
+
+      return Result.Success;
+    }
+  }
+}

@@ -1,0 +1,105 @@
+﻿using Rhino;
+using Rhino.Commands;
+using Rhino.DocObjects;
+using Rhino.Geometry;
+using Rhino.Input.Custom;
+
+namespace SampleCsCommands
+{
+  public class SampleCsExtrudeMeshFace : Command
+  {
+    public override string EnglishName => "SampleCsExtrudeMeshFace";
+
+    protected override Result RunCommand(RhinoDoc doc, RunMode mode)
+    {
+      // Select a mesh
+      GetObject go = new GetObject();
+      go.SetCommandPrompt("Select mesh face to extrude");
+      go.GeometryFilter = ObjectType.MeshFace;
+      go.Get();
+      if (go.CommandResult() != Result.Success)
+        return go.CommandResult();
+
+      // Get the selected object reference
+      ObjRef objref = go.Object(0);
+      RhinoObject rh_obj = objref.Object();
+      if (null == rh_obj)
+        return Result.Failure;
+
+      // Get the base mesh
+      Mesh mesh = objref.Mesh();
+      if (null == mesh)
+        return Result.Failure;
+
+      // Get the selected component
+      ComponentIndex ci = objref.GeometryComponentIndex;
+      if (ComponentIndexType.MeshFace != ci.ComponentIndexType)
+        return Result.Failure;
+
+      // Copy the mesh geometry
+      Mesh mesh_copy = mesh.DuplicateMesh();
+
+      // Make sure the mesh has normals
+      if (mesh_copy.FaceNormals.Count != mesh_copy.Faces.Count)
+        mesh_copy.FaceNormals.ComputeFaceNormals();
+      if (mesh_copy.Normals.Count != mesh_copy.Vertices.Count)
+        mesh_copy.Normals.ComputeNormals();
+
+      // Get the mesh face
+      MeshFace face = mesh_copy.Faces[ci.Index];
+
+      // Get the mesh face vertices
+      Point3d[] base_vertices = new Point3d[4];
+      for (int i = 0; i < 4; i++)
+        base_vertices[i] = mesh_copy.Vertices[face[i]];
+
+      // Get the face normal and scale it by 5.0
+      Vector3f offset = mesh_copy.FaceNormals[ci.Index] * (float)5.0;
+
+      // Calculate the offset vertices
+      Point3d[] offset_vertices = new Point3d[4];
+      for (int i = 0; i < 4; i++)
+        offset_vertices[i] = base_vertices[i] + offset;
+
+      // Delete the mesh face
+      int[] faces_indices = new int[] { ci.Index };
+      mesh_copy.Faces.DeleteFaces(faces_indices);
+
+      // Add the base mesh face vertices
+      int[] base_indices = new int[4];
+      for (int i = 0; i < 4; i++)
+        base_indices[i] = mesh_copy.Vertices.Add(base_vertices[i]);
+
+      // Add the offset mesh face vertices
+      int[] offset_indices = new int[4];
+      for (int i = 0; i < 4; i++)
+        offset_indices[i] = mesh_copy.Vertices.Add(offset_vertices[i]);
+
+      // Add the new mesh faces
+      mesh_copy.Faces.AddFace(base_indices[3], base_indices[0], offset_indices[0], offset_indices[3]);
+      mesh_copy.Faces.AddFace(base_indices[0], base_indices[1], offset_indices[1], offset_indices[0]);
+      mesh_copy.Faces.AddFace(base_indices[1], base_indices[2], offset_indices[2], offset_indices[1]);
+      mesh_copy.Faces.AddFace(base_indices[2], base_indices[3], offset_indices[3], offset_indices[2]);
+      mesh_copy.Faces.AddFace(offset_indices[0], offset_indices[1], offset_indices[2], offset_indices[3]);
+
+      // Clean up
+      mesh_copy.FaceNormals.ComputeFaceNormals();
+      mesh_copy.Normals.ComputeNormals();
+      mesh_copy.TextureCoordinates.Clear();
+      mesh_copy.Compact();
+
+      string log;
+      if (!mesh_copy.IsValidWithLog(out log))
+      {
+        RhinoApp.WriteLine(log);
+        return Result.Failure;
+      }
+
+      doc.Objects.Replace(rh_obj.Id, mesh_copy);
+      //doc.Objects.AddMesh(mesh_copy);
+      doc.Views.Redraw();
+
+      return Result.Success;
+    }
+  }
+}

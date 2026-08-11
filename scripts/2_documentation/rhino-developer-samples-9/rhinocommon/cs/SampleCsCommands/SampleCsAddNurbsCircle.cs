@@ -1,0 +1,54 @@
+﻿using Rhino;
+using Rhino.Commands;
+using Rhino.Geometry;
+using System;
+
+namespace SampleCsCommands
+{
+  public class SampleCsAddNurbsCircle : Command
+  {
+    public override string EnglishName => "SampleCsAddNurbsCircle";
+
+    protected override Result RunCommand(RhinoDoc doc, RunMode mode)
+    {
+      const int order = 3; // order = degree + 1
+      const int cv_count = 9;
+
+      NurbsCurve curve = new NurbsCurve(3, true, order, cv_count);
+
+      curve.Points.SetPoint(0, 1.0, 0.0, 0.0, 1.0);
+      curve.Points.SetPoint(1, 0.707107, 0.707107, 0.0, 0.707107);
+      curve.Points.SetPoint(2, 0.0, 1.0, 0.0, 1.0);
+      curve.Points.SetPoint(3, -0.707107, 0.707107, 0.0, 0.707107);
+      curve.Points.SetPoint(4, -1.0, 0.0, 0.0, 1.0);
+      curve.Points.SetPoint(5, -0.707107, -0.707107, 0.0, 0.707107);
+      curve.Points.SetPoint(6, 0.0, -1.0, 0.0, 1.0);
+      curve.Points.SetPoint(7, 0.707107, -0.707107, 0.0, 0.707107);
+      curve.Points.SetPoint(8, 1.0, 0.0, 0.0, 1.0);
+
+      curve.Knots[0] = 0.0;
+      curve.Knots[1] = 0.0;
+      curve.Knots[2] = 0.5 * Math.PI;
+      curve.Knots[3] = 0.5 * Math.PI;
+      curve.Knots[4] = Math.PI;
+      curve.Knots[5] = Math.PI;
+      curve.Knots[6] = 1.5 * Math.PI;
+      curve.Knots[7] = 1.5 * Math.PI;
+      curve.Knots[8] = 2.0 * Math.PI;
+      curve.Knots[9] = 2.0 * Math.PI;
+
+      if (curve.IsValid)
+      {
+        double length = curve.GetLength();
+        Interval domain = new Interval(0.0, length);
+        curve.Domain = domain;
+
+        doc.Objects.AddCurve(curve);
+        doc.Views.Redraw();
+      }
+
+      return Result.Success;
+
+    }
+  }
+}

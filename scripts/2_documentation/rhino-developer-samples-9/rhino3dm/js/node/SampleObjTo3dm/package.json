@@ -1,0 +1,16 @@
+{
+  "name": "obj-to-3dm-via-threejs",
+  "version": "1.0.0",
+  "description": "An example cli tool that loads an obj and converts it to 3dm!",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Luis Fraguada",
+  "license": "MIT",
+  "dependencies": {
+    "rhino3dm": "8.4.0",
+    "three": "0.158.0"
+  }
+}

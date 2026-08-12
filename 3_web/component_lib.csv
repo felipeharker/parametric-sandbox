@@ -1,18 +1,18 @@
 component,web name,category,img file,description
-DirFile.py,DirectoryFile,document,DirFile.png,Lists files in a directory.
-GenUserObj.py,GenerateUserObj,document,GenUserObj.png,Programmatically packages a specified Grasshopper component into a custom UserObject.
+DirFile.py,DirectoryFile,document,DirFile.png,"Lists files in a directory. Useful for selecting images, CSV, and other files to reference in Grasshopper interface."
+GenUserObj.py,GenerateUserObject,document,GenUserObj.png,Programmatically packages a specified Grasshopper component into a custom UserObject.
 ParamCont1.py,ParamController1,document,ParamCont1.png,Updates Grasshopper parameters from a CSV file.
 ParamCont2.py,ParamController2,document,ParamCont2.png,"Updates Grasshopper parameters from a CSV file, with optional section filtering."
 ParamExp.py,ParamExporter,document,ParamExp.png,Exports Grasshopper top-level inputs to a CSV file.
-BndDiaG.py,BoundDiaGrid,grid,BndDiaG.png,Creates a grid of individual closed diamond cells within a region.
-BndHexG.py,BoundHexGrid,grid,BndHexG.png,Creates a grid of individual closed hexagonal cells within a region.
+BndDiaG.py,BoundDiamondGrid,grid,BndDiaG.png,Creates a grid of individual closed diamond cells within a region.
+BndHexG.py,BoundHexagonalGrid,grid,BndHexG.png,Creates a grid of individual closed hexagonal cells within a region.
+BndRectG.py,BoundRectangularGrid,grid,BndRectG.png,Creates a grid of individual closed rectangular cells within a region.
 BndPan.py,BoundPanel,grid,BndPan.png,Creates a grid of rectangular panels that perfectly fit within a bounding curve.
-BndRectG.py,BoundRectGrid,grid,BndRectG.png,Creates a grid of individual closed rectangular cells within a region.
-BndTrim.py,BoundaryTrim,grid,BndTrim.png,"Utility to trim curves with a region, closing the curves along the intersection boundary if they were originally closed."
+BndTrim.py,BoundTrim,grid,BndTrim.png,"Utility to trim curves with a region, closing the curves along the intersection boundary if they were originally closed."
 ImgHue.py,ImageHue,math,ImgHue.png,Calculates the luminance values of an image at specified points.
-RandValGen.py,RandomValueGenerator,math,RandValGen.png,Generates a list of random float or integer numbers within a specified range.
-StepRound.py,Step Rounding,math,StepRound.png,Rounds a list of numbers to the nearest value of a given step.
 ValRemap.py,RemapValues,math,ValRemap.png,Remaps a list of values to a new target domain defined by user inputs.
+RandValGen.py,RandomValueGenerator,math,RandValGen.png,Generates a list of random float or integer numbers within a specified range.
+StepRound.py,StepRounding,math,StepRound.png,Rounds a list of numbers to the nearest value of a given step.
 PattGen.py,PatternGenerator,pattern,PattGen.png,Generates a custom Voronoi pattern utilizing parallel multi-threading for maximum speed.
 PattSel.py,PatternSelector,pattern,PattSel.png,Selects a 7-bit combination pattern based on an index.
 PattSelUtil.py,PatternSelectionUtility,pattern,PattSelUtil.png,Utility to generate a 7-item boolean toggle list for the PattGen component by allowing users to toggle individual point generators.

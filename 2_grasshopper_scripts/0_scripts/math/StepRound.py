@@ -10,7 +10,7 @@ Outputs:
 """
 
 try:
-    ghenv.Component.Name = "Step Rounding"
+    ghenv.Component.Name = "StepRounding"
     ghenv.Component.NickName = "StepRound"
     ghenv.Component.Description = "Rounds a list of numbers to the nearest value of a given step."
 except NameError:

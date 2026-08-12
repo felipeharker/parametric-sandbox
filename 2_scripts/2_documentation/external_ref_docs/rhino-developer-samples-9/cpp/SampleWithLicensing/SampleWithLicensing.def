@@ -1,6 +1,0 @@
-; SampleWithLicensing.def : Declares the module parameters for the DLL.
-
-; LIBRARY      "SampleWithLicensing"
-
-EXPORTS
-    ; Explicit exports can go here

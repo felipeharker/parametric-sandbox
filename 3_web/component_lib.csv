@@ -1,5 +1,5 @@
 component,web name,category,img file,description
-DirFile.py,DirectoryFile,document,"DirFile.png, GenUserObj.png","Lists files in a directory. Useful for selecting images, CSV, and other files to reference in Grasshopper interface."
+DirFile.py,DirectoryFile,document,DirFile.png,"Lists files in a directory. Useful for selecting images, CSV, and other files to reference in Grasshopper interface."
 GenUserObj.py,GenerateUserObject,document,GenUserObj.png,Programmatically packages a specified Grasshopper component into a custom UserObject.
 ParamCont1.py,ParamController1,document,ParamCont1.png,Updates Grasshopper parameters from a CSV file.
 ParamCont2.py,ParamController2,document,ParamCont2.png,"Updates Grasshopper parameters from a CSV file, with optional section filtering."
@@ -17,6 +17,6 @@ PattGen.py,PatternGenerator,pattern,PattGen.png,Generates a custom Voronoi patte
 PattSel.py,PatternSelector,pattern,PattSel.png,Selects a 7-bit combination pattern based on an index.
 PattSelUtil.py,PatternSelectionUtility,pattern,PattSelUtil.png,Utility to generate a 7-item boolean toggle list for the PattGen component by allowing users to toggle individual point generators.
 VorGrid.py,GridVoronoi,pattern,VorGrid.png,Generates Voronoi cells by randomly evaluating normalized coordinates within a set of grid surfaces.
-ClusterCrack.cs,ClusterCrack,utility,,
+ClusterCrack.cs,ClusterCrack,utility,,Resets the password of a native Grasshopper UserObject/Cluster.
 DataGate.py,DataGate,utility,,Acts as a gate to either pass data through or block it completely by outputting an empty DataTree.
 StrSort.py,StringSort,utility,,Sorts a list of strings using Natural Sorting.

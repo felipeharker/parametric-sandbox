@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grasshopper Scripts - Visual Flow Diagrams</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --accent: #0078d7;
+            --border: #e0e0e0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            text-align: left;
+        }
+        h1 {
+            text-align: left;
+            margin-bottom: 40px;
+            color: var(--accent);
+            font-size: 2rem;
+        }
+        h2 {
+            text-align: left;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            color: var(--text-main);
+            font-size: 1.4rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+        .accordion-container {
+            max-width: 1400px;
+            margin: 0;
+        }
+        details.script-row {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        summary {
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+            background-color: var(--card-bg);
+            border-radius: 6px;
+        }
+        summary::-webkit-details-marker {
+            display: none;
+        }
+        details.script-row[open] summary {
+            border-bottom: 1px solid var(--border);
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        summary:hover {
+            background-color: #fcfcfc;
+        }
+        .desc {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        .content {
+            padding: 20px;
+            text-align: left;
+            overflow-x: auto;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: flex-start;
+        }
+    </style>
+    <!-- Load Mermaid.js -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+</head>
+<body>
+
+    <div class="accordion-container">
+        <h1>Grasshopper Script Architectures</h1>
+
+        <!-- CATEGORY: DEVELOPMENT TOOLS -->
+        <h2>Development Tools</h2>
+
+        <details class="script-row">
+            <summary>GenerateUserObj <span class="desc">- Packages GH components into a custom User Object</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef str fill:#fff59d,stroke:#fbc02d,stroke-width:2px;
+                    classDef bool fill:#e1bee7,stroke:#8e24aa,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+                    classDef dec fill:#fff3e0,stroke:#fb8c00,stroke-width:2px;
+
+                    I1[/TargetNick: String/]:::str
+                    I2[/ObjName: String/]:::str
+                    I3[/ObjDesc: String/]:::str
+                    I4[/Category: String/]:::str
+                    I5[/SubCategory: String/]:::str
+                    I6[/IconPath: String/]:::str
+                    I7[/Run: Boolean/]:::bool
+
+                    I1 --> B{"Run == True?"}:::dec
+                    I2 --> B
+                    I3 --> B
+                    I4 --> B
+                    I5 --> B
+                    I6 --> B
+                    I7 --> B
+
+                    B -- Yes --> C["Locate target component in doc"]:::proc
+                    C --> D["Instantiate GH_UserObject & Map data"]:::proc
+                    D --> E["Set naming, category & icon properties"]:::proc
+                    E --> F["Save to default path & clear memory"]:::proc
+                    
+                    F --> O1([A: Status Message String]):::str
+            </div>
+        </details>
+
+        <!-- CATEGORY: DOCUMENT CONFIGURATIONS -->
+        <h2>Document Configurations</h2>
+
+        <details class="script-row">
+            <summary>DirectoryFile <span class="desc">- Lists files in a directory</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef str fill:#fff59d,stroke:#fbc02d,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+
+                    I1[/directory: String/]:::str
+                    
+                    I1 --> P1["Validate directory path"]:::proc
+                    P1 --> P2["Read directory via os.listdir"]:::proc
+                    
+                    P2 --> O1([file_name: List of Strings]):::str
+            </div>
+        </details>
+
+        <details class="script-row">
+            <summary>ParamController1 <span class="desc">- Updates Grasshopper parameters from a CSV file</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef str fill:#fff59d,stroke:#fbc02d,stroke-width:2px;
+                    classDef bool fill:#e1bee7,stroke:#8e24aa,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+                    classDef none fill:#f5f5f5,stroke:#bdbdbd,stroke-width:2px,stroke-dasharray: 5 5;
+
+                    I1[/update: Boolean/]:::bool
+                    I2[/csv_file: String/]:::str
+                    
+                    I1 --> P1["Parse CSV for Name, Type, Value"]:::proc
+                    I2 --> P1
+                    
+                    P1 --> P2["Find params by NickName"]:::proc
+                    P2 --> P3["Cast data types dynamically"]:::proc
+                    P3 --> P4["Queue updates & Schedule Solution"]:::proc
+                    
+                    P4 --> O1([None]):::none
+            </div>
+        </details>
+
+        <details class="script-row">
+            <summary>ParamController2 <span class="desc">- Updates Grasshopper parameters from a CSV file with section filtering</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef str fill:#fff59d,stroke:#fbc02d,stroke-width:2px;
+                    classDef bool fill:#e1bee7,stroke:#8e24aa,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+                    classDef dec fill:#fff3e0,stroke:#fb8c00,stroke-width:2px;
+                    classDef none fill:#f5f5f5,stroke:#bdbdbd,stroke-width:2px,stroke-dasharray: 5 5;
+
+                    I1[/update: Boolean/]:::bool
+                    I2[/csv_file: String/]:::str
+                    I3[/section: String - Optional/]:::str
+                    
+                    I1 --> P1["Parse CSV headers & active section"]:::proc
+                    I2 --> P1
+                    I3 --> P1
+                    
+                    P1 --> D1{"Matches Active Section?"}:::dec
+                    D1 -- No --> P2["Skip Row"]:::proc
+                    D1 -- Yes --> P3["Find NickName & Cast data types"]:::proc
+                    P3 --> P4["Queue updates & Schedule Solution"]:::proc
+                    
+                    P4 --> O1([None]):::none
+            </div>
+        </details>
+
+        <details class="script-row">
+            <summary>ParamExporter <span class="desc">- Exports Grasshopper top-level inputs to a CSV file</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef str fill:#fff59d,stroke:#fbc02d,stroke-width:2px;
+                    classDef bool fill:#e1bee7,stroke:#8e24aa,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+                    classDef none fill:#f5f5f5,stroke:#bdbdbd,stroke-width:2px,stroke-dasharray: 5 5;
+
+                    I1[/export: Boolean/]:::bool
+                    I2[/csv_file: String/]:::str
+                    
+                    I1 --> P1["Scan Document Objects"]:::proc
+                    I2 --> P1
+                    
+                    P1 --> P2["Filter for top-level parameters"]:::proc
+                    P2 --> P3["Extract Type, NickName, and Value"]:::proc
+                    P3 --> P4["Write collected array to CSV"]:::proc
+                    
+                    P4 --> O1([None]):::none
+            </div>
+        </details>
+
+        <!-- CATEGORY: GRID CONFIGURATIONS -->
+        <h2>Grid Configurations</h2>
+
+        <details class="script-row">
+            <summary>BoundDiaGrid <span class="desc">- Creates a grid of closed diamond cells within a region</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef num fill:#bbdefb,stroke:#1e88e5,stroke-width:2px;
+                    classDef geo fill:#c8e6c9,stroke:#43a047,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+
+                    I1[/boundary: Geometry - Curve/]:::geo
+                    I2[/size_x: Number - Float/]:::num
+                    I3[/size_y: Number - Float/]:::num
+
+                    I1 --> P1["Extract bounding box extents"]:::proc
+                    I2 --> P1
+                    I3 --> P1
+                    
+                    P1 --> P2["Iterate staggered points"]:::proc
+                    P2 --> P3["Draw 5-pt closed diamond polylines"]:::proc
+                    P3 --> P4["Filter out-of-bounds cells via tolerance"]:::proc
+                    
+                    P4 --> O1([diagrid: List of Curves]):::geo
+                    P4 --> O2([bnd_rect: Bounding Curve]):::geo
+            </div>
+        </details>
+
+        <details class="script-row">
+            <summary>BoundHexGrid <span class="desc">- Creates a grid of closed hexagonal cells within a region</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef num fill:#bbdefb,stroke:#1e88e5,stroke-width:2px;
+                    classDef geo fill:#c8e6c9,stroke:#43a047,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+
+                    I1[/boundary: Geometry - Curve/]:::geo
+                    I2[/size_x: Number - Float/]:::num
+                    I3[/size_y: Number - Float/]:::num
+
+                    I1 --> P1["Extract bounds & Calculate Hex Radii"]:::proc
+                    I2 --> P1
+                    I3 --> P1
+                    
+                    P1 --> P2["Iterate staggered centers"]:::proc
+                    P2 --> P3["Draw 6-sided polygons"]:::proc
+                    P3 --> P4["Filter out-of-bounds cells"]:::proc
+                    
+                    P4 --> O1([hexgrid: List of Curves]):::geo
+                    P4 --> O2([bnd_rect: Bounding Curve]):::geo
+            </div>
+        </details>
+
+        <details class="script-row">
+            <summary>BoundPanel <span class="desc">- Creates rectangular panels that perfectly fit a bounding curve</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef num fill:#bbdefb,stroke:#1e88e5,stroke-width:2px;
+                    classDef geo fill:#c8e6c9,stroke:#43a047,stroke-width:2px;
+                    classDef bool fill:#e1bee7,stroke:#8e24aa,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+
+                    I1[/boundary: Geometry - Curve/]:::geo
+                    I2[/sheet_x: Number - Float/]:::num
+                    I3[/sheet_y: Number - Float/]:::num
+                    I4[/use_world_xy: Boolean/]:::bool
+
+                    I1 --> P1["Determine orientation plane & intervals"]:::proc
+                    I2 --> P1
+                    I3 --> P1
+                    I4 --> P1
+                    
+                    P1 --> P2["Calculate full-sheet fits"]:::proc
+                    P2 --> P3["Compute edge remainder sizes"]:::proc
+                    P3 --> P4["Construct 3D rectangular intervals"]:::proc
+                    
+                    P4 --> O1([panels: List of Curves]):::geo
+            </div>
+        </details>
+
+        <details class="script-row">
+            <summary>BoundRectGrid <span class="desc">- Creates a grid of closed rectangular cells within a region</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef num fill:#bbdefb,stroke:#1e88e5,stroke-width:2px;
+                    classDef geo fill:#c8e6c9,stroke:#43a047,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+
+                    I1[/boundary: Geometry - Curve/]:::geo
+                    I2[/size_x: Number - Float/]:::num
+                    I3[/size_y: Number - Float/]:::num
+
+                    I1 --> P1["Get bounding box & uniform divisions"]:::proc
+                    I2 --> P1
+                    I3 --> P1
+                    
+                    P1 --> P2["Map uniform grid centers"]:::proc
+                    P2 --> P3["Draw 4-pt closed polylines"]:::proc
+                    P3 --> P4["Filter out-of-bounds cells"]:::proc
+                    
+                    P4 --> O1([rectgrid: List of Curves]):::geo
+                    P4 --> O2([bnd_rect: Bounding Curve]):::geo
+            </div>
+        </details>
+
+        <!-- CATEGORY: MATHEMATICS -->
+        <h2>Mathematics</h2>
+
+        <details class="script-row">
+            <summary>RandomValueGenerator <span class="desc">- Generates a list of random float numbers within a specified range</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef num fill:#bbdefb,stroke:#1e88e5,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+
+                    I1[/count: Integer/]:::num
+                    I2[/min_val: Number/]:::num
+                    I3[/max_val: Number/]:::num
+                    I4[/seed: Integer/]:::num
+
+                    I1 --> P1["Resolve true min/max limits"]:::proc
+                    I2 --> P1
+                    I3 --> P1
+                    
+                    I4 --> P2["Inject Seed"]:::proc
+                    P2 --> P1
+                    
+                    P1 --> P3["Roll random floats"]:::proc
+                    
+                    P3 --> O1([values: List of Numbers]):::num
+            </div>
+        </details>
+
+        <details class="script-row">
+            <summary>RemapValues <span class="desc">- Remaps a list of values to a new target domain</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef num fill:#bbdefb,stroke:#1e88e5,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+
+                    I1[/values: List of Numbers/]:::num
+                    I2[/value_a: Number/]:::num
+                    I3[/value_b: Number/]:::num
+
+                    I1 --> P1["Get Original Domain"]:::proc
+                    I2 --> P2["Calculate Target Domain Extent"]:::proc
+                    I3 --> P2
+                    
+                    P1 --> P3["Scale each value proportionally"]:::proc
+                    P2 --> P3
+                    
+                    P3 --> O1([remapped_values: List of Numbers]):::num
+            </div>
+        </details>
+
+        <!-- CATEGORY: PATTERN TOOLS -->
+        <h2>Pattern Tools</h2>
+
+        <details class="script-row">
+            <summary>ImageHue <span class="desc">- Calculates the luminance values of an image at specified points</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef str fill:#fff59d,stroke:#fbc02d,stroke-width:2px;
+                    classDef num fill:#bbdefb,stroke:#1e88e5,stroke-width:2px;
+                    classDef geo fill:#c8e6c9,stroke:#43a047,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+
+                    I1[/image_path: String/]:::str
+                    I2[/points: List of Points/]:::geo
+
+                    I1 --> P1["Load System.Drawing Bitmap"]:::proc
+                    I2 --> P2["Get extents & Normalize points"]:::proc
+                    
+                    P1 --> P3["Map normalized points to image Pixels"]:::proc
+                    P2 --> P3
+                    
+                    P3 --> P4["Query RGB data & Apply Luminance Math"]:::proc
+                    
+                    P4 --> O1([values: List of Numbers]):::num
+            </div>
+        </details>
+
+        <details class="script-row">
+            <summary>PatternGenerator <span class="desc">- Generates a custom Voronoi pattern within grid cells based on scaled boundaries</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef geo fill:#c8e6c9,stroke:#43a047,stroke-width:2px;
+                    classDef num fill:#bbdefb,stroke:#1e88e5,stroke-width:2px;
+                    classDef bool fill:#e1bee7,stroke:#8e24aa,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+
+                    I1[/grid_cells: List of Curves/]:::geo
+                    I2[/inner_scale: Float/]:::num
+                    I3[/eval_outer: Float/]:::num
+                    I4[/eval_inner: Float/]:::num
+                    I5[/point_toggle: List of Booleans/]:::bool
+
+                    I1 --> P1["Generate scaled inner cell boundaries"]:::proc
+                    I2 --> P1
+                    
+                    P1 --> P2["Check 7-bit toggle & Evaluators for points"]:::proc
+                    I3 --> P2
+                    I4 --> P2
+                    I5 --> P2
+                    
+                    P2 --> P3["Cull duplicates & Compute Voronoi base"]:::proc
+                    P3 --> P4["Package into DataTree"]:::proc
+                    
+                    P4 --> O1([pattern_curves: DataTree of Curves]):::geo
+            </div>
+        </details>
+
+        <details class="script-row">
+            <summary>PatternSelector <span class="desc">- Selects a 7-bit combination pattern based on an index</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef num fill:#bbdefb,stroke:#1e88e5,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+
+                    I1[/index: Number - Int/]:::num
+
+                    I1 --> P1["Constrain input to array bounds"]:::proc
+                    
+                    P2["Generate 7-bit patterns via itertools"]:::proc --> P3["Filter patterns where sum >= 2"]:::proc
+                    P3 --> P1
+                    
+                    P1 --> O1([values: List of Numbers]):::num
+            </div>
+        </details>
+
+        <details class="script-row">
+            <summary>PatternSelectionUtility <span class="desc">- Utility to generate a 7-item boolean toggle list</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef bool fill:#e1bee7,stroke:#8e24aa,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+
+                    I1[/use_centroid: Boolean/]:::bool
+                    I2[/use_outer_mid: Boolean/]:::bool
+                    I3[/use_outer_vert: Boolean/]:::bool
+                    I4[/use_outer_eval: Boolean/]:::bool
+                    I5[/use_inner_mid: Boolean/]:::bool
+                    I6[/use_inner_vert: Boolean/]:::bool
+                    I7[/use_inner_eval: Boolean/]:::bool
+
+                    I1 --> P1["Process via safe_bool helper"]:::proc
+                    I2 --> P1
+                    I3 --> P1
+                    I4 --> P1
+                    I5 --> P1
+                    I6 --> P1
+                    I7 --> P1
+                    
+                    P1 --> P2["Compile ordered 7-item Boolean list"]:::proc
+                    
+                    P2 --> O1([point_toggle: List of Booleans]):::bool
+            </div>
+        </details>
+
+        <!-- CATEGORY: UTILITY -->
+        <h2>Utility</h2>
+
+        <details class="script-row">
+            <summary>DataGate <span class="desc">- Utility gate to pass or block a data stream</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef bool fill:#e1bee7,stroke:#8e24aa,stroke-width:2px;
+                    classDef dat fill:#e0e0e0,stroke:#757575,stroke-width:2px;
+                    classDef dec fill:#fff3e0,stroke:#fb8c00,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+
+                    I1[/toggle: Boolean/]:::bool
+                    I2[/data: DataTree/]:::dat
+
+                    I1 --> D1{"Toggle == True?"}:::dec
+                    I2 --> D1
+                    
+                    D1 -- Yes --> P1["Pass data through exactly"]:::proc
+                    D1 -- No --> P2["Generate empty DataTree"]:::proc
+                    
+                    P1 --> O1([out_data: DataTree]):::dat
+                    P2 --> O1
+            </div>
+        </details>
+
+        <details class="script-row">
+            <summary>StringSort <span class="desc">- Sorts a list of strings using Natural Sorting</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef str fill:#fff59d,stroke:#fbc02d,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+
+                    I1[/values: List of Strings/]:::str
+
+                    I1 --> P1["Split characters & integers via Regex"]:::proc
+                    P1 --> P2["Build sorting key mapping integer magnitude"]:::proc
+                    
+                    P2 --> O1([sorted_values: List of Strings]):::str
+            </div>
+        </details>
+
+        <!-- CATEGORY: MISCELLANEOUS -->
+        <h2>Miscellaneous</h2>
+
+        <details class="script-row">
+            <summary>ClusterCrack <span class="desc">- Synthesizes and overwrites Grasshopper Cluster passwords</span></summary>
+            <div class="content mermaid">
+                graph TD;
+                    classDef str fill:#fff59d,stroke:#fbc02d,stroke-width:2px;
+                    classDef bool fill:#e1bee7,stroke:#8e24aa,stroke-width:2px;
+                    classDef proc fill:#fafafa,stroke:#757575,stroke-width:2px;
+
+                    I1[/ClusterName: String/]:::str
+                    I2[/NewPassword: String/]:::str
+                    I3[/Run: Boolean/]:::bool
+
+                    I1 --> P1["Find GH_Cluster Object in Document"]:::proc
+                    I3 --> P1
+                    
+                    P1 --> P2["Expose private m_password field via Reflection"]:::proc
+                    
+                    I2 --> P3["Synthesize temporary password bytes"]:::proc
+                    P2 --> P3
+                    
+                    P3 --> P4["Force write new bytes & Expire Solution"]:::proc
+                    
+                    P4 --> O1([Report: Status String]):::str
+            </div>
+        </details>
+
+    </div>
+</body>
+</html>

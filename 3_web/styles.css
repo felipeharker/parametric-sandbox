@@ -85,10 +85,15 @@ main {
 .component.active .component-content {
     display: block;
 }
-.component-image {
-    max-width: 100%;
-    height: auto;
+.component-images {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     margin-top: 1rem;
+}
+.component-image {
+    width: 100%;
+    height: auto;
     border-radius: 4px;
     border: 1px solid #eee;
 }

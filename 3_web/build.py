@@ -42,16 +42,20 @@ def generate_site():
 
             name = row.get('web name', component_file).strip()
 
-            img_file = row['img file'].strip()
+            img_files_raw = row['img file'].strip()
             description = row['description'].strip()
 
-            has_image = False
-            if img_file:
-                src_png = os.path.join(samples_dir, img_file)
-                if os.path.exists(src_png):
-                    dst_png = os.path.join(images_dir, img_file)
-                    shutil.copy2(src_png, dst_png)
-                    has_image = True
+            valid_images = []
+            if img_files_raw:
+                img_file_names = [name.strip() for name in img_files_raw.split(',') if name.strip()]
+                for img_file in img_file_names:
+                    src_png = os.path.join(samples_dir, img_file)
+                    if os.path.exists(src_png):
+                        dst_png = os.path.join(images_dir, img_file)
+                        shutil.copy2(src_png, dst_png)
+                        valid_images.append(img_file)
+
+            valid_images.sort()
 
             if category not in categories:
                 categories[category] = []
@@ -59,7 +63,7 @@ def generate_site():
             categories[category].append({
                 'name': name,
                 'description': description,
-                'image': img_file if has_image else None
+                'images': valid_images
             })
 
     # Sort components by name in each category (if not already handled)
@@ -76,8 +80,11 @@ def generate_site():
             html_categories.append('<div class="component-content">')
             if comp['description']:
                 html_categories.append(f'<p>{comp["description"]}</p>')
-            if comp['image']:
-                html_categories.append(f'<img class="component-image" src="images/{comp["image"]}" alt="{comp["name"]} Image">')
+            if comp['images']:
+                html_categories.append('<div class="component-images">')
+                for img in comp['images']:
+                    html_categories.append(f'<img class="component-image" src="images/{img}" alt="{comp["name"]} Image">')
+                html_categories.append('</div>')
             html_categories.append('</div>')
             html_categories.append('</div>')
         html_categories.append('</div>')

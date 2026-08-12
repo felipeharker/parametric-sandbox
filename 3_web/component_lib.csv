@@ -1,5 +1,5 @@
 component,web name,category,img file,description
-DirFile.py,DirectoryFile,document,DirFile.png,"Lists files in a directory. Useful for selecting images, CSV, and other files to reference in Grasshopper interface."
+DirFile.py,DirectoryFile,document,"DirFile.png, GenUserObj.png","Lists files in a directory. Useful for selecting images, CSV, and other files to reference in Grasshopper interface."
 GenUserObj.py,GenerateUserObject,document,GenUserObj.png,Programmatically packages a specified Grasshopper component into a custom UserObject.
 ParamCont1.py,ParamController1,document,ParamCont1.png,Updates Grasshopper parameters from a CSV file.
 ParamCont2.py,ParamController2,document,ParamCont2.png,"Updates Grasshopper parameters from a CSV file, with optional section filtering."

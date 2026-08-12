@@ -40,7 +40,7 @@ def generate_site():
             component_file = row['component'].strip()
             basename = os.path.splitext(component_file)[0]
 
-            name = component_file
+            name = row.get('web name', component_file).strip()
 
             img_file = row['img file'].strip()
             description = row['description'].strip()

@@ -2,24 +2,7 @@ import os
 import re
 import shutil
 import zipfile
-
-def extract_metadata_from_python(filepath):
-    name = None
-    description = None
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
-
-    # Try to find ghenv.Component.Name
-    name_match = re.search(r'ghenv\.Component\.Name\s*=\s*["\']([^"\']+)["\']', content)
-    if name_match:
-        name = name_match.group(1)
-
-    # Try to find ghenv.Component.Description
-    desc_match = re.search(r'ghenv\.Component\.Description\s*=\s*["\']([^"\']+)["\']', content)
-    if desc_match:
-        description = desc_match.group(1)
-
-    return name, description
+import csv
 
 def generate_site():
     web_dir = os.path.dirname(os.path.abspath(__file__))
@@ -45,41 +28,43 @@ def generate_site():
                     arcname = os.path.join(folder_name, os.path.relpath(file_path, folder))
                     zipf.write(file_path, arcname)
 
-    # 2. Gather components
+    # 2. Gather components from CSV
+    csv_path = os.path.join(web_dir, 'component_lib.csv')
     categories = {}
-    for category in os.listdir(scripts_dir):
-        category_path = os.path.join(scripts_dir, category)
-        if os.path.isdir(category_path):
-            components = []
-            for file in os.listdir(category_path):
-                if file.endswith('.py') or file.endswith('.cs'):
-                    filepath = os.path.join(category_path, file)
-                    basename = os.path.splitext(file)[0]
 
-                    name = basename
-                    description = ""
+    with open(csv_path, 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f, skipinitialspace=True)
+        for row in reader:
+            category = row['category'].strip()
+            # If the user changed the name or extension, we'll try to present the script file name without extension
+            component_file = row['component'].strip()
+            basename = os.path.splitext(component_file)[0]
 
-                    if file.endswith('.py'):
-                        n, d = extract_metadata_from_python(filepath)
-                        if n: name = n
-                        if d: description = d
+            name = component_file
 
-                    # Check for image
-                    png_filename = f"{basename}.png"
-                    src_png = os.path.join(samples_dir, png_filename)
-                    has_image = False
-                    if os.path.exists(src_png):
-                        dst_png = os.path.join(images_dir, png_filename)
-                        shutil.copy2(src_png, dst_png)
-                        has_image = True
+            img_file = row['img file'].strip()
+            description = row['description'].strip()
 
-                    components.append({
-                        'name': name,
-                        'description': description,
-                        'image': png_filename if has_image else None
-                    })
-            if components:
-                categories[category] = sorted(components, key=lambda x: x['name'])
+            has_image = False
+            if img_file:
+                src_png = os.path.join(samples_dir, img_file)
+                if os.path.exists(src_png):
+                    dst_png = os.path.join(images_dir, img_file)
+                    shutil.copy2(src_png, dst_png)
+                    has_image = True
+
+            if category not in categories:
+                categories[category] = []
+
+            categories[category].append({
+                'name': name,
+                'description': description,
+                'image': img_file if has_image else None
+            })
+
+    # Sort components by name in each category (if not already handled)
+    for cat in categories:
+        categories[cat] = sorted(categories[cat], key=lambda x: x['name'])
 
     # 3. Generate HTML
     html_categories = []
@@ -103,109 +88,7 @@ def generate_site():
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parametric Sandbox</title>
-    <style>
-        body {{
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            color: #333;
-            background-color: #f9f9f9;
-        }}
-        header {{
-            background-color: #fff;
-            padding: 1rem;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }}
-        .logo {{
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin: 0;
-        }}
-        nav {{
-            display: flex;
-            gap: 1rem;
-        }}
-        nav a {{
-            text-decoration: none;
-            color: #0066cc;
-            font-weight: 500;
-        }}
-        nav a:hover {{
-            text-decoration: underline;
-        }}
-        main {{
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }}
-        .category {{
-            margin-bottom: 2rem;
-        }}
-        .category-title {{
-            text-transform: capitalize;
-            border-bottom: 2px solid #333;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
-        }}
-        .component {{
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            margin-bottom: 0.5rem;
-            overflow: hidden;
-        }}
-        .component-header {{
-            padding: 1rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #fff;
-            transition: background-color 0.2s;
-        }}
-        .component-header:hover {{
-            background-color: #f1f1f1;
-        }}
-        .component-title {{
-            margin: 0;
-            font-size: 1rem;
-        }}
-        .component-icon {{
-            font-size: 0.8rem;
-            color: #666;
-            transition: transform 0.2s;
-        }}
-        .component.active .component-icon {{
-            transform: rotate(180deg);
-        }}
-        .component-content {{
-            display: none;
-            padding: 1rem;
-            border-top: 1px solid #ddd;
-        }}
-        .component.active .component-content {{
-            display: block;
-        }}
-        .component-image {{
-            max-width: 100%;
-            height: auto;
-            margin-top: 1rem;
-            border-radius: 4px;
-            border: 1px solid #eee;
-        }}
-        @media (max-width: 600px) {{
-            header {{
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }}
-        }}
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>

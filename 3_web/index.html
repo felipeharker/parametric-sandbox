@@ -4,109 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parametric Sandbox</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            color: #333;
-            background-color: #f9f9f9;
-        }
-        header {
-            background-color: #fff;
-            padding: 1rem;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .logo {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin: 0;
-        }
-        nav {
-            display: flex;
-            gap: 1rem;
-        }
-        nav a {
-            text-decoration: none;
-            color: #0066cc;
-            font-weight: 500;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        main {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        .category {
-            margin-bottom: 2rem;
-        }
-        .category-title {
-            text-transform: capitalize;
-            border-bottom: 2px solid #333;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        .component {
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            margin-bottom: 0.5rem;
-            overflow: hidden;
-        }
-        .component-header {
-            padding: 1rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #fff;
-            transition: background-color 0.2s;
-        }
-        .component-header:hover {
-            background-color: #f1f1f1;
-        }
-        .component-title {
-            margin: 0;
-            font-size: 1rem;
-        }
-        .component-icon {
-            font-size: 0.8rem;
-            color: #666;
-            transition: transform 0.2s;
-        }
-        .component.active .component-icon {
-            transform: rotate(180deg);
-        }
-        .component-content {
-            display: none;
-            padding: 1rem;
-            border-top: 1px solid #ddd;
-        }
-        .component.active .component-content {
-            display: block;
-        }
-        .component-image {
-            max-width: 100%;
-            height: auto;
-            margin-top: 1rem;
-            border-radius: 4px;
-            border: 1px solid #eee;
-        }
-        @media (max-width: 600px) {
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
@@ -118,7 +16,7 @@
         </nav>
     </header>
     <main>
-        <div class="category"><h2 class="category-title">document</h2><div class="component"><div class="component-header"><h3 class="component-title">DirectoryFile</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Lists files in a directory.</p><img class="component-image" src="images/DirFile.png" alt="DirectoryFile Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">GenerateUserObj</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Programmatically packages a specified Grasshopper component into a custom UserObject.</p></div></div><div class="component"><div class="component-header"><h3 class="component-title">ParamController1</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Updates Grasshopper parameters from a CSV file.</p><img class="component-image" src="images/ParamCont1.png" alt="ParamController1 Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">ParamController2</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Updates Grasshopper parameters from a CSV file, with optional section filtering.</p><img class="component-image" src="images/ParamCont2.png" alt="ParamController2 Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">ParamExporter</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Exports Grasshopper top-level inputs to a CSV file.</p><img class="component-image" src="images/ParamExp.png" alt="ParamExporter Image"></div></div></div><div class="category"><h2 class="category-title">grid</h2><div class="component"><div class="component-header"><h3 class="component-title">BoundDiaGrid</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Creates a grid of individual closed diamond cells within a region.</p><img class="component-image" src="images/BndDiaG.png" alt="BoundDiaGrid Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">BoundHexGrid</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Creates a grid of individual closed hexagonal cells within a region.</p><img class="component-image" src="images/BndHexG.png" alt="BoundHexGrid Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">BoundPanel</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Creates a grid of rectangular panels that perfectly fit within a bounding curve.</p><img class="component-image" src="images/BndPan.png" alt="BoundPanel Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">BoundRectGrid</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Creates a grid of individual closed rectangular cells within a region.</p><img class="component-image" src="images/BndRectG.png" alt="BoundRectGrid Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">BoundaryTrim</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Utility to trim curves with a region, closing the curves along the intersection boundary if they were originally closed.</p><img class="component-image" src="images/BndTrim.png" alt="BoundaryTrim Image"></div></div></div><div class="category"><h2 class="category-title">math</h2><div class="component"><div class="component-header"><h3 class="component-title">ImageHue</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Calculates the luminance values of an image at specified points.</p><img class="component-image" src="images/ImgHue.png" alt="ImageHue Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">RandomValueGenerator</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Generates a list of random float or integer numbers within a specified range.</p><img class="component-image" src="images/RandValGen.png" alt="RandomValueGenerator Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">RemapValues</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Remaps a list of values to a new target domain defined by user inputs.</p><img class="component-image" src="images/ValRemap.png" alt="RemapValues Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">Step Rounding</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Rounds a list of numbers to the nearest value of a given step.</p><img class="component-image" src="images/StepRound.png" alt="Step Rounding Image"></div></div></div><div class="category"><h2 class="category-title">pattern</h2><div class="component"><div class="component-header"><h3 class="component-title">GridVoronoi</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Generates Voronoi cells by randomly evaluating normalized coordinates within a set of grid surfaces.</p><img class="component-image" src="images/VorGrid.png" alt="GridVoronoi Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">PatternGenerator</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Generates a custom Voronoi pattern utilizing parallel multi-threading for maximum speed.</p><img class="component-image" src="images/PattGen.png" alt="PatternGenerator Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">PatternSelectionUtility</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Utility to generate a 7-item boolean toggle list for the PattGen component by allowing users to toggle individual point generators.</p><img class="component-image" src="images/PattSelUtil.png" alt="PatternSelectionUtility Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">PatternSelector</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Selects a 7-bit combination pattern based on an index.</p><img class="component-image" src="images/PattSel.png" alt="PatternSelector Image"></div></div></div><div class="category"><h2 class="category-title">utility</h2><div class="component"><div class="component-header"><h3 class="component-title">ClusterCrack</h3><span class="component-icon">▼</span></div><div class="component-content"></div></div><div class="component"><div class="component-header"><h3 class="component-title">DataGate</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Acts as a gate to either pass data through or block it completely by outputting an empty DataTree.</p></div></div><div class="component"><div class="component-header"><h3 class="component-title">StringSort</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Sorts a list of strings using Natural Sorting.</p></div></div></div>
+        <div class="category"><h2 class="category-title">document</h2><div class="component"><div class="component-header"><h3 class="component-title">DirFile.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Lists files in a directory.</p><img class="component-image" src="images/DirFile.png" alt="DirFile.py Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">GenUserObj.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Programmatically packages a specified Grasshopper component into a custom UserObject.</p><img class="component-image" src="images/GenUserObj.png" alt="GenUserObj.py Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">ParamCont1.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Updates Grasshopper parameters from a CSV file.</p><img class="component-image" src="images/ParamCont1.png" alt="ParamCont1.py Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">ParamCont2.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Updates Grasshopper parameters from a CSV file, with optional section filtering.</p><img class="component-image" src="images/ParamCont2.png" alt="ParamCont2.py Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">ParamExp.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Exports Grasshopper top-level inputs to a CSV file.</p><img class="component-image" src="images/ParamExp.png" alt="ParamExp.py Image"></div></div></div><div class="category"><h2 class="category-title">grid</h2><div class="component"><div class="component-header"><h3 class="component-title">BndDiaG.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Creates a grid of individual closed diamond cells within a region.</p><img class="component-image" src="images/BndDiaG.png" alt="BndDiaG.py Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">BndHexG.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Creates a grid of individual closed hexagonal cells within a region.</p><img class="component-image" src="images/BndHexG.png" alt="BndHexG.py Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">BndPan.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Creates a grid of rectangular panels that perfectly fit within a bounding curve.</p><img class="component-image" src="images/BndPan.png" alt="BndPan.py Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">BndRectG.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Creates a grid of individual closed rectangular cells within a region.</p><img class="component-image" src="images/BndRectG.png" alt="BndRectG.py Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">BndTrim.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Utility to trim curves with a region, closing the curves along the intersection boundary if they were originally closed.</p><img class="component-image" src="images/BndTrim.png" alt="BndTrim.py Image"></div></div></div><div class="category"><h2 class="category-title">math</h2><div class="component"><div class="component-header"><h3 class="component-title">ImgHue.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Calculates the luminance values of an image at specified points.</p><img class="component-image" src="images/ImgHue.png" alt="ImgHue.py Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">RandValGen.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Generates a list of random float or integer numbers within a specified range.</p><img class="component-image" src="images/RandValGen.png" alt="RandValGen.py Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">StepRound.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Rounds a list of numbers to the nearest value of a given step.</p><img class="component-image" src="images/StepRound.png" alt="StepRound.py Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">ValRemap.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Remaps a list of values to a new target domain defined by user inputs.</p><img class="component-image" src="images/ValRemap.png" alt="ValRemap.py Image"></div></div></div><div class="category"><h2 class="category-title">pattern</h2><div class="component"><div class="component-header"><h3 class="component-title">PattGen.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Generates a custom Voronoi pattern utilizing parallel multi-threading for maximum speed.</p><img class="component-image" src="images/PattGen.png" alt="PattGen.py Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">PattSel.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Selects a 7-bit combination pattern based on an index.</p><img class="component-image" src="images/PattSel.png" alt="PattSel.py Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">PattSelUtil.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Utility to generate a 7-item boolean toggle list for the PattGen component by allowing users to toggle individual point generators.</p><img class="component-image" src="images/PattSelUtil.png" alt="PattSelUtil.py Image"></div></div><div class="component"><div class="component-header"><h3 class="component-title">VorGrid.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Generates Voronoi cells by randomly evaluating normalized coordinates within a set of grid surfaces.</p><img class="component-image" src="images/VorGrid.png" alt="VorGrid.py Image"></div></div></div><div class="category"><h2 class="category-title">utility</h2><div class="component"><div class="component-header"><h3 class="component-title">ClusterCrack.cs</h3><span class="component-icon">▼</span></div><div class="component-content"></div></div><div class="component"><div class="component-header"><h3 class="component-title">DataGate.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Acts as a gate to either pass data through or block it completely by outputting an empty DataTree.</p></div></div><div class="component"><div class="component-header"><h3 class="component-title">StrSort.py</h3><span class="component-icon">▼</span></div><div class="component-content"><p>Sorts a list of strings using Natural Sorting.</p></div></div></div>
     </main>
 
     <script>

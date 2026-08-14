@@ -10,7 +10,7 @@ Outputs:
 """
 
 try:
-    ghenv.Component.Name = "BoundaryTrim"
+    ghenv.Component.Name = "BoundTrim"
     ghenv.Component.NickName = "BndTrim"
     ghenv.Component.Description = "Utility to trim curves with a region, closing the curves along the intersection boundary if they were originally closed."
 except NameError:

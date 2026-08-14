@@ -15,9 +15,61 @@ Outputs:
 """
 
 try:
+    # --- Component Metadata ---
     ghenv.Component.Name = "GenerateUserObj"
     ghenv.Component.NickName = "GenUserObj"
     ghenv.Component.Description = "Programmatically packages a specified Grasshopper component into a custom UserObject."
+
+    # --- Inputs Metadata ---
+    # Index 0: target_nick
+    if ghenv.Component.Params.Input.Count > 0:
+        ghenv.Component.Params.Input[0].Name = "target_nick"
+        ghenv.Component.Params.Input[0].NickName = "TarNi"
+        ghenv.Component.Params.Input[0].Description = "String (The nickname of the canvas node/cluster to package)"
+
+    # Index 1: obj_name
+    if ghenv.Component.Params.Input.Count > 1:
+        ghenv.Component.Params.Input[1].Name = "obj_name"
+        ghenv.Component.Params.Input[1].NickName = "ObjNa"
+        ghenv.Component.Params.Input[1].Description = "String (Display name of the new User Object)"
+
+    # Index 2: obj_desc
+    if ghenv.Component.Params.Input.Count > 2:
+        ghenv.Component.Params.Input[2].Name = "obj_desc"
+        ghenv.Component.Params.Input[2].NickName = "ObjDe"
+        ghenv.Component.Params.Input[2].Description = "String (Tooltip description for the new User Object)"
+
+    # Index 3: category
+    if ghenv.Component.Params.Input.Count > 3:
+        ghenv.Component.Params.Input[3].Name = "category"
+        ghenv.Component.Params.Input[3].NickName = "Cat"
+        ghenv.Component.Params.Input[3].Description = "String (Ribbon Tab name, e.g., 'User')"
+
+    # Index 4: sub_category
+    if ghenv.Component.Params.Input.Count > 4:
+        ghenv.Component.Params.Input[4].Name = "sub_category"
+        ghenv.Component.Params.Input[4].NickName = "Sub"
+        ghenv.Component.Params.Input[4].Description = "String (Panel section name within the tab)"
+
+    # Index 5: icon_path
+    if ghenv.Component.Params.Input.Count > 5:
+        ghenv.Component.Params.Input[5].Name = "icon_path"
+        ghenv.Component.Params.Input[5].NickName = "Icon"
+        ghenv.Component.Params.Input[5].Description = "String (File path to a .png or bitmap image for the node icon)"
+
+    # Index 6: run
+    if ghenv.Component.Params.Input.Count > 6:
+        ghenv.Component.Params.Input[6].Name = "run"
+        ghenv.Component.Params.Input[6].NickName = "Run"
+        ghenv.Component.Params.Input[6].Description = "Boolean (Set to True to execute the creation)"
+
+    # --- Outputs Metadata ---
+    # Index 0: UserObject
+    if ghenv.Component.Params.Output.Count > 0:
+        ghenv.Component.Params.Output[0].Name = "UserObject"
+        ghenv.Component.Params.Output[0].NickName = "User"
+        ghenv.Component.Params.Output[0].Description = "String (Status message indicating success or failure)"
+
 except NameError:
     pass
 
@@ -32,7 +84,7 @@ def build_user_object(target_nick, name, desc, category, sub_category, icon_path
     # 1. Locate the target component on the active document
     gh_doc = ghenv.Component.OnPingDocument()
     source_obj = None
-    
+
     for obj in gh_doc.Objects:
         if obj.NickName == target_nick:
             source_obj = obj
@@ -67,9 +119,9 @@ def build_user_object(target_nick, name, desc, category, sub_category, icon_path
     # 6. Set Path and Save
     uo.CreateDefaultPath(True)
     attempted_path = uo.Path # Capture the path for debugging
-    
+
     saved_successfully = uo.SaveToFile()
-    
+
     # 7. Clear memory payload
     uo.Clear()
 

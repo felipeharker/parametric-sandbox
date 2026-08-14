@@ -10,9 +10,31 @@ Outputs:
 """
 
 try:
+    # --- Component Metadata ---
     ghenv.Component.Name = "PullLayerGeometry"
     ghenv.Component.NickName = "PullLayerGeo"
     ghenv.Component.Description = "Pulls geometry from a specified Rhino layer or sublayer."
+
+    # --- Inputs Metadata ---
+    # Index 0: layer_name
+    if ghenv.Component.Params.Input.Count > 0:
+        ghenv.Component.Params.Input[0].Name = "layer_name"
+        ghenv.Component.Params.Input[0].NickName = "Lyr"
+        ghenv.Component.Params.Input[0].Description = "Text (item access, str)"
+
+    # Index 1: pull
+    if ghenv.Component.Params.Input.Count > 1:
+        ghenv.Component.Params.Input[1].Name = "pull"
+        ghenv.Component.Params.Input[1].NickName = "Pull"
+        ghenv.Component.Params.Input[1].Description = "Boolean (item access, bool)"
+
+    # --- Outputs Metadata ---
+    # Index 0: geo
+    if ghenv.Component.Params.Output.Count > 0:
+        ghenv.Component.Params.Output[0].Name = "geo"
+        ghenv.Component.Params.Output[0].NickName = "Geo"
+        ghenv.Component.Params.Output[0].Description = "List of Geometry (The geometry pulled from the specified layer)"
+
 except NameError:
     pass
 
@@ -22,14 +44,14 @@ geo = []
 
 if pull and layer_name:
     doc = Rhino.RhinoDoc.ActiveDoc
-    
+
     # Locate the layer by its full path name (supports "layer::sublayer" formatting)
     layer_index = doc.Layers.FindByFullPath(layer_name, -1)
-    
+
     if layer_index >= 0:
         # Layer exists, retrieve all objects on this specific layer
         rhino_objects = doc.Objects.FindByLayer(layer_name)
-        
+
         if rhino_objects:
             for obj in rhino_objects:
                 # Extract and append the base RhinoCommon geometry of each object

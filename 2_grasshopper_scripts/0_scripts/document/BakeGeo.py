@@ -13,9 +13,45 @@ Outputs:
 """
 
 try:
+    # --- Component Metadata ---
     ghenv.Component.Name = "BakeGeometry"
     ghenv.Component.NickName = "BakeGeo"
     ghenv.Component.Description = "Bakes input geometry to a specified layer in Rhino, with options to add or replace existing layer contents."
+
+    # --- Inputs Metadata ---
+    # Index 0: geo
+    if ghenv.Component.Params.Input.Count > 0:
+        ghenv.Component.Params.Input[0].Name = "geo"
+        ghenv.Component.Params.Input[0].NickName = "Geo"
+        ghenv.Component.Params.Input[0].Description = "Geometry (list access, geometry)"
+
+    # Index 1: layer_name
+    if ghenv.Component.Params.Input.Count > 1:
+        ghenv.Component.Params.Input[1].Name = "layer_name"
+        ghenv.Component.Params.Input[1].NickName = "Lyr"
+        ghenv.Component.Params.Input[1].Description = "Text (item access, string)"
+
+    # Index 2: layer_color
+    if ghenv.Component.Params.Input.Count > 2:
+        ghenv.Component.Params.Input[2].Name = "layer_color"
+        ghenv.Component.Params.Input[2].NickName = "LayCo"
+        ghenv.Component.Params.Input[2].Description = "Point3d (item access, Point3d) - X,Y,Z maps to R,G,B (0-255)"
+
+    # Index 3: replace
+    if ghenv.Component.Params.Input.Count > 3:
+        ghenv.Component.Params.Input[3].Name = "replace"
+        ghenv.Component.Params.Input[3].NickName = "Repl"
+        ghenv.Component.Params.Input[3].Description = "Boolean (item access, bool)"
+
+    # Index 4: bake
+    if ghenv.Component.Params.Input.Count > 4:
+        ghenv.Component.Params.Input[4].Name = "bake"
+        ghenv.Component.Params.Input[4].NickName = "Bake"
+        ghenv.Component.Params.Input[4].Description = "Boolean (item access, bool)"
+
+    # --- Outputs Metadata ---
+    pass
+
 except NameError:
     pass
 
@@ -30,13 +66,13 @@ def bake_geometry_to_layer():
 
     # Switch scriptcontext to target the active Rhino Document
     sc.doc = Rhino.RhinoDoc.ActiveDoc
-    
+
     try:
-        # Check if the layer exists; if not, create it. 
+        # Check if the layer exists; if not, create it.
         # rs.AddLayer inherently supports "Parent::Child" syntax
         if not rs.IsLayer(layer_name):
             rs.AddLayer(layer_name)
-            
+
         # If a color is provided, convert X,Y,Z to R,G,B and apply it
         if layer_color is not None:
             # Extract and clamp values between 0 and 255 to prevent errors
@@ -44,29 +80,29 @@ def bake_geometry_to_layer():
             g = max(0, min(255, int(layer_color.Y)))
             b = max(0, min(255, int(layer_color.Z)))
             rs.LayerColor(layer_name, (r, g, b))
-            
+
         # If replace mode is True (1 = replace)
         if replace:
             existing_objs = rs.ObjectsByLayer(layer_name)
             if existing_objs:
                 rs.DeleteObjects(existing_objs)
-                
+
         # Get the layer index to assign to the new geometry attributes
         # FindByFullPath returns the integer index of the layer directly
         layer_index = sc.doc.Layers.FindByFullPath(layer_name, -1)
-        
+
         # Define Rhino object attributes and assign the target layer index
         attr = Rhino.DocObjects.ObjectAttributes()
         attr.LayerIndex = layer_index
-        
+
         # Iterate through the geometry list and add them to the Rhino document
         for item in geo:
             if item:
                 sc.doc.Objects.Add(item, attr)
-                
+
         # Redraw the Rhino viewports so baked objects appear instantly
         sc.doc.Views.Redraw()
-        
+
     finally:
         # Crucial step: Always switch scriptcontext back to Grasshopper
         # Put in a finally block to ensure it happens even if an error occurs above

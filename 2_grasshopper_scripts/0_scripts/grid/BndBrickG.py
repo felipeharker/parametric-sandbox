@@ -13,9 +13,49 @@ Outputs:
 """
 
 try:
+    # --- Component Metadata ---
     ghenv.Component.Name = "BoundBrickGrid"
     ghenv.Component.NickName = "BndBrickG"
     ghenv.Component.Description = "Creates a brick grid of individual closed rectangular cells within a region."
+
+    # --- Inputs Metadata ---
+    # Index 0: boundary
+    if ghenv.Component.Params.Input.Count > 0:
+        ghenv.Component.Params.Input[0].Name = "boundary"
+        ghenv.Component.Params.Input[0].NickName = "Bnd"
+        ghenv.Component.Params.Input[0].Description = "Geometry (item access, crv)"
+
+    # Index 1: size_x
+    if ghenv.Component.Params.Input.Count > 1:
+        ghenv.Component.Params.Input[1].Name = "size_x"
+        ghenv.Component.Params.Input[1].NickName = "Sx"
+        ghenv.Component.Params.Input[1].Description = "Number (item access, float)"
+
+    # Index 2: size_y
+    if ghenv.Component.Params.Input.Count > 2:
+        ghenv.Component.Params.Input[2].Name = "size_y"
+        ghenv.Component.Params.Input[2].NickName = "Sy"
+        ghenv.Component.Params.Input[2].Description = "Number (item access, float)"
+
+    # Index 3: cell_shift
+    if ghenv.Component.Params.Input.Count > 3:
+        ghenv.Component.Params.Input[3].Name = "cell_shift"
+        ghenv.Component.Params.Input[3].NickName = "Shift"
+        ghenv.Component.Params.Input[3].Description = "Number (item access, float)"
+
+    # --- Outputs Metadata ---
+    # Index 0: rectgrid
+    if ghenv.Component.Params.Output.Count > 0:
+        ghenv.Component.Params.Output[0].Name = "rectgrid"
+        ghenv.Component.Params.Output[0].NickName = "Rect"
+        ghenv.Component.Params.Output[0].Description = "List of Curves (The final individual closed rectangular cells)"
+
+    # Index 1: bnd_rect
+    if ghenv.Component.Params.Output.Count > 1:
+        ghenv.Component.Params.Output[1].Name = "bnd_rect"
+        ghenv.Component.Params.Output[1].NickName = "Rect"
+        ghenv.Component.Params.Output[1].Description = "Curve (The bounding rectangle of the original input)"
+
 except NameError:
     pass
 
@@ -54,7 +94,7 @@ def create_closed_brick_cells(region_geometry, size_x_val, size_y_val, cell_shif
 
     for row in range(-2, cells_y + 4):
         cy = p_min.Y + (actual_dy / 2.0) + (row * actual_dy)
-        
+
         # Apply the shift value if the row is odd, creating the brick effect
         shift = cell_shift_val if row % 2 != 0 else 0.0
 

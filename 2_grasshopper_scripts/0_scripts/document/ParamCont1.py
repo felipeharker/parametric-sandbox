@@ -10,9 +10,27 @@ Outputs:
 """
 
 try:
+    # --- Component Metadata ---
     ghenv.Component.Name = "ParamController1"
     ghenv.Component.NickName = "ParamCont1"
     ghenv.Component.Description = "Updates Grasshopper parameters from a CSV file."
+
+    # --- Inputs Metadata ---
+    # Index 0: update
+    if ghenv.Component.Params.Input.Count > 0:
+        ghenv.Component.Params.Input[0].Name = "update"
+        ghenv.Component.Params.Input[0].NickName = "Upd"
+        ghenv.Component.Params.Input[0].Description = "Boolean (item access, bool)"
+
+    # Index 1: csv_file
+    if ghenv.Component.Params.Input.Count > 1:
+        ghenv.Component.Params.Input[1].Name = "csv_file"
+        ghenv.Component.Params.Input[1].NickName = "CsvFi"
+        ghenv.Component.Params.Input[1].Description = "String (item access, str)"
+
+    # --- Outputs Metadata ---
+    pass
+
 except NameError:
     pass
 

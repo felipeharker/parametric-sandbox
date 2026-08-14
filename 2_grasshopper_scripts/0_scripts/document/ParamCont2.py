@@ -11,9 +11,33 @@ Outputs:
 """
 
 try:
+    # --- Component Metadata ---
     ghenv.Component.Name = "ParamController2"
     ghenv.Component.NickName = "ParamCont2"
     ghenv.Component.Description = "Updates Grasshopper parameters from a CSV file, with optional section filtering."
+
+    # --- Inputs Metadata ---
+    # Index 0: update
+    if ghenv.Component.Params.Input.Count > 0:
+        ghenv.Component.Params.Input[0].Name = "update"
+        ghenv.Component.Params.Input[0].NickName = "Upd"
+        ghenv.Component.Params.Input[0].Description = "Boolean (item access, bool)"
+
+    # Index 1: csv_file
+    if ghenv.Component.Params.Input.Count > 1:
+        ghenv.Component.Params.Input[1].Name = "csv_file"
+        ghenv.Component.Params.Input[1].NickName = "CsvFi"
+        ghenv.Component.Params.Input[1].Description = "String (item access, str)"
+
+    # Index 2: section
+    if ghenv.Component.Params.Input.Count > 2:
+        ghenv.Component.Params.Input[2].Name = "section"
+        ghenv.Component.Params.Input[2].NickName = "Sect"
+        ghenv.Component.Params.Input[2].Description = "String (item access, str) [Optional]"
+
+    # --- Outputs Metadata ---
+    pass
+
 except NameError:
     pass
 
@@ -146,7 +170,7 @@ def main():
         except ValueError:
             print("Warning: Could not find exact headers 'input name', 'type', 'value'. Assuming columns 0, 1, 2.")
             name_idx, type_idx, value_idx = 0, 1, 2
-            
+
         try:
             section_idx = header_lower.index("section")
         except ValueError:
@@ -160,7 +184,7 @@ def main():
             input_name = row[name_idx]
             input_type = row[type_idx]
             input_value = row[value_idx]
-            
+
             row_section = None
             if section_idx != -1 and len(row) > section_idx:
                 row_section = row[section_idx].strip()

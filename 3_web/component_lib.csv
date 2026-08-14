@@ -20,3 +20,13 @@ VorGrid.py,GridVoronoi,pattern,VorGrid.png,Generates Voronoi cells by randomly e
 ClusterCrack.cs,ClusterCrack,utility,,Resets the password of a native Grasshopper UserObject/Cluster.
 DataGate.py,DataGate,utility,,Acts as a gate to either pass data through or block it completely by outputting an empty DataTree.
 StrSort.py,StringSort,utility,,Sorts a list of strings using Natural Sorting.
+BndTriG.py,BoundTriGrid,grid,,Creates a grid of individual closed triangular cells within a region.
+BakeGeo.py,BakeGeometry,document,,"Bakes input geometry to a specified layer in Rhino, with options to add or replace existing layer contents."
+PullLayerGeo.py,PullLayerGeometry,document,,Pulls geometry from a specified Rhino layer or sublayer.
+GeoBnd2D.py,GeometryBoundary2D,geometry,,Draws a boundary rectangle around a geometry based on a user-defined plane.
+GeoBnd3D.py,GeometryBoundary3D,geometry,,Draws a boundary box around a geometry.
+GridFWed.py,GridFoldWedge,folding,,Creates folded 3D gridded geometries efficiently.
+GridFPyra.py,GridFoldPyramid,folding,,Creates folded 3D gridded geometries efficiently.
+GridFPlan.py,GridFoldPlanar,folding,,Creates folded 3D gridded geometries efficiently.
+PanTabSys.py,PanelTabSystem,fabrication,,Creates fold areas and tabs for an aluminum panel system based on a face boundary.
+FrameTabSys.py,FrameTabSystem,fabrication,,Creates parametric tab perforations within a frame boundary for an aluminum panel system.

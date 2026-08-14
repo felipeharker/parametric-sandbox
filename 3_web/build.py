@@ -124,7 +124,10 @@ def generate_site():
 </body>
 </html>
 """
-    with open(os.path.join(web_dir, 'index.html'), 'w', encoding='utf-8') as f:
+    # Update navigation in components.html
+    html_content = html_content.replace('<a href="index.html">Home</a>', '<a href="index.html">Home</a>\n            <a href="components.html">Documentation</a>')
+
+    with open(os.path.join(web_dir, 'components.html'), 'w', encoding='utf-8') as f:
         f.write(html_content)
 
     print("Build successful.")

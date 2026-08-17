@@ -1,6 +1,6 @@
 # Jules Agent Instructions
 
-## TITLE
+## WEB UPDATES
 
 14 August 2026
 
@@ -16,3 +16,17 @@ Build a simple landing page with an about section/project summary, useful links,
 ### Item 3
 
 Document repository changes in a MarkDown file in directory 4_llm_docs please
+
+## CODE STANDARDIZATION
+
+### Item 1
+
+I have updated the ScriptStandards.md in the 4_llm_docs directory to reflect the standard code for component input and output names, nicknames, and tooltips. please amend all the scripts in the 2_grasshopper_scripts\0_scripts directory to reflect the new standard. Add input and output names, nicknames, and tooltips in that format. Please ensure ALL of it is standardized across all scripts. by standardizing names, nicknames, tooltips, etc. we can ensure the smoothest and most effective user experience, and from a dev standpoint, ensure maintainability and scalability in the future.
+
+### Item 2
+
+I have noticed generally that some small elements of the codebase may be out of standard with the rest of it. please, review all the scripts and modify them to fit the standard we have created. adhere to that standard strictly.
+
+### Item 3
+
+Update the component .csv of course to match all changes.

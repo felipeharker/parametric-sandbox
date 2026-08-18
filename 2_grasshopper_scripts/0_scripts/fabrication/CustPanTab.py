@@ -21,6 +21,8 @@ try:
     ghenv.Component.Name = "CustomPanelTabSystem"
     ghenv.Component.NickName = "CustPanTab"
     ghenv.Component.Description = "Creates fold areas and custom tabs for an aluminum panel system."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Fabrication"
 except NameError:
     pass
 

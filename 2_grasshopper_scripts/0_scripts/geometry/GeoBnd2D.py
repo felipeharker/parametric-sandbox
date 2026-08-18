@@ -15,6 +15,8 @@ try:
     ghenv.Component.Name = "GeometryBoundary2D"
     ghenv.Component.NickName = "GeoBnd2D"
     ghenv.Component.Description = "Draws a boundary rectangle around a geometry based on a user-defined plane."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Geometry"
 except NameError:
     pass
 

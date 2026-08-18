@@ -16,6 +16,8 @@ try:
     ghenv.Component.Name = "RandomValueGenerator"
     ghenv.Component.NickName = "RandValGen"
     ghenv.Component.Description = "Generates a list of random float or integer numbers within a specified range."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Math"
 except NameError:
     pass
 

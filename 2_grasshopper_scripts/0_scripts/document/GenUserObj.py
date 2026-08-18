@@ -18,6 +18,8 @@ try:
     ghenv.Component.Name = "GenerateUserObj"
     ghenv.Component.NickName = "GenUserObj"
     ghenv.Component.Description = "Programmatically packages a specified Grasshopper component into a custom UserObject."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Document"
 except NameError:
     pass
 

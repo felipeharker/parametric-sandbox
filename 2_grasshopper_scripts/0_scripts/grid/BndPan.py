@@ -15,6 +15,8 @@ try:
     ghenv.Component.Name = "BoundPanel"
     ghenv.Component.NickName = "BndPan"
     ghenv.Component.Description = "Creates a grid of rectangular panels that perfectly fit within a bounding curve."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Grid"
 except NameError:
     pass
 

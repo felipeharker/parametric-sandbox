@@ -19,6 +19,7 @@ try:
     ghenv.Component.Description = "Generates solid commercial signage channel letters with standoff and illumination faces."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Signage"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

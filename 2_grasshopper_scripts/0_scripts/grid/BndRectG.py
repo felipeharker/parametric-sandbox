@@ -17,6 +17,7 @@ try:
     ghenv.Component.Description = "Creates a grid of individual closed rectangular cells within a region."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Grid"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Math
+
 """
 Calculates the luminance values of an image at specified points.
 
@@ -18,6 +22,7 @@ try:
     ghenv.Component.Description = "Calculates the luminance values of an image at specified points."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Math"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

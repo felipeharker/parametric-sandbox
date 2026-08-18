@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Folding
+
 """
 Unrolls 3D folded geometries into 2D cut and fold linework for fabrication.
 
@@ -23,6 +27,7 @@ try:
     ghenv.Component.Description = "Unrolls 3D folded geometries into 2D cut and fold linework for fabrication."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Folding"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

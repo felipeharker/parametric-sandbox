@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Document
+
 """
 Pulls geometry from a specified Rhino layer or sublayer.
 
@@ -18,6 +22,7 @@ try:
     ghenv.Component.Description = "Pulls geometry from a specified Rhino layer or sublayer."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Document"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

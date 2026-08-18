@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Folding
+
 """
 Creates folded 3-dimensional gridded geometries efficiently from planar cells and fold lines.
 
@@ -22,6 +26,7 @@ try:
     ghenv.Component.Description = "Creates folded 3D gridded geometries efficiently."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Folding"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Grid
+
 """
 Creates a grid of individual closed hexagonal cells within a region.
 
@@ -21,6 +25,7 @@ try:
     ghenv.Component.Description = "Creates a grid of individual closed hexagonal cells within a region."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Grid"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

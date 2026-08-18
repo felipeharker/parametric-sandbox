@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Math
+
 """
 Generates a list of random numbers (float or integer) within a specified range.
 
@@ -21,6 +25,7 @@ try:
     ghenv.Component.Description = "Generates a list of random float or integer numbers within a specified range."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Math"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

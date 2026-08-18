@@ -18,6 +18,7 @@ try:
     ghenv.Component.Description = "Bakes input geometry to a specified layer in Rhino, with options to add or replace existing layer contents."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Document"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

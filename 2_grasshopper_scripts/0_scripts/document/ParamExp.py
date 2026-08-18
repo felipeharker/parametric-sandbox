@@ -15,6 +15,7 @@ try:
     ghenv.Component.Description = "Exports Grasshopper top-level inputs to a CSV file."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Document"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

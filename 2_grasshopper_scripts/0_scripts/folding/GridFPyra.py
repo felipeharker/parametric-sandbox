@@ -21,6 +21,7 @@ try:
     ghenv.Component.Description = "Creates folded 3D gridded geometries efficiently."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Folding"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

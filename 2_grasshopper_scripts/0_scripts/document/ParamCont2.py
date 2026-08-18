@@ -16,6 +16,7 @@ try:
     ghenv.Component.Description = "Updates Grasshopper parameters from a CSV file, with optional section filtering."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Document"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

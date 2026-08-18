@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Grid
+
 """
 Utility to generate Voronoi cells from points evaluated within a list of grid cells.
 
@@ -23,6 +27,7 @@ try:
     ghenv.Component.Description = "Generates Voronoi cells by randomly evaluating normalized coordinates within a set of grid surfaces."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Grid"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

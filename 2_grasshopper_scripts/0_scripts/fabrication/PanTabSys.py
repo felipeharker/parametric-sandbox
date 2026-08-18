@@ -23,6 +23,7 @@ try:
     ghenv.Component.Description = "Creates fold areas and tabs for an aluminum panel system based on a face boundary."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Fabrication"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Pattern
+
 """
 Utility to generate a 7-item boolean list for the PattGen component by allowing users to toggle individual point generators.
 
@@ -22,6 +26,7 @@ try:
     ghenv.Component.Description = "Utility to generate a 7-item boolean toggle list for the PattGen component by allowing users to toggle individual point generators."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Pattern"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

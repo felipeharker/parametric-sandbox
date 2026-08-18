@@ -17,6 +17,7 @@ try:
     ghenv.Component.Description = "Remaps the shortest distances between a list of points and an attractor curve to a new target domain."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Math"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

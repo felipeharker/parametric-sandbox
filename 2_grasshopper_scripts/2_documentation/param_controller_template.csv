@@ -1,0 +1,6 @@
+input name,type,value
+ExampleNumber,float,3.14159
+ExampleInteger,int,42
+ExampleText,string,Hello World
+ExampleToggle,bool,true
+ExampleGeometry,crv,SourceCurveNickname

@@ -16,6 +16,8 @@ try:
     ghenv.Component.Name = "VoronoiGrid"
     ghenv.Component.NickName = "VoroGrid"
     ghenv.Component.Description = "Generates Voronoi cells by randomly evaluating normalized coordinates within a set of grid surfaces."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Grid"
 except NameError:
     pass
 

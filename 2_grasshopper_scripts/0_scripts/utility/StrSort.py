@@ -12,6 +12,8 @@ try:
     ghenv.Component.Name = "StringSort"
     ghenv.Component.NickName = "StrSort"
     ghenv.Component.Description = "Sorts a list of strings using Natural Sorting."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Utility"
 except NameError:
     pass
 

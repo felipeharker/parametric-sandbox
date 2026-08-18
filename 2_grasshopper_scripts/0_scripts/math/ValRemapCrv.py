@@ -15,6 +15,8 @@ try:
     ghenv.Component.Name = "ValueRemapCurve"
     ghenv.Component.NickName = "ValRemapCrv"
     ghenv.Component.Description = "Remaps the shortest distances between a list of points and an attractor curve to a new target domain."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Math"
 except NameError:
     pass
 

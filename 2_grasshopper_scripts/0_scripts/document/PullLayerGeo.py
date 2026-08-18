@@ -13,6 +13,8 @@ try:
     ghenv.Component.Name = "PullLayerGeometry"
     ghenv.Component.NickName = "PullLayerGeo"
     ghenv.Component.Description = "Pulls geometry from a specified Rhino layer or sublayer."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Document"
 except NameError:
     pass
 

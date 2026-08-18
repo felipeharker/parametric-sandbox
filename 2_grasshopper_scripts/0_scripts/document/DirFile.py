@@ -12,6 +12,8 @@ try:
     ghenv.Component.Name = "DirectoryFile"
     ghenv.Component.NickName = "DirFile"
     ghenv.Component.Description = "Lists files in a directory."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Document"
 except NameError:
     pass
 

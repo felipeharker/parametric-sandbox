@@ -13,6 +13,8 @@ try:
     ghenv.Component.Name = "ImageHue"
     ghenv.Component.NickName = "ImgHue"
     ghenv.Component.Description = "Calculates the luminance values of an image at specified points."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Math"
 except NameError:
     pass
 

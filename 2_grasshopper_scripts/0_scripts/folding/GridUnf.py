@@ -20,6 +20,8 @@ try:
     ghenv.Component.Name = "GridUnfold"
     ghenv.Component.NickName = "GridUnf"
     ghenv.Component.Description = "Unrolls 3D folded geometries into 2D cut and fold linework for fabrication."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Folding"
 except NameError:
     pass
 

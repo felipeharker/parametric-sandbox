@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Geometry
+
 """
 Draws a boundary rectangle around a geometry based on a user-defined plane.
 
@@ -20,6 +24,7 @@ try:
     ghenv.Component.Description = "Draws a boundary rectangle around a geometry based on a user-defined plane."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Geometry"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

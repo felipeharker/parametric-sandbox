@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Math
+
 """
 Remaps the distances between a list of points and an attractor point to a new target domain.
 
@@ -19,6 +23,7 @@ try:
     ghenv.Component.Description = "Remaps the distances between a list of points and an attractor point to a new target domain."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Math"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

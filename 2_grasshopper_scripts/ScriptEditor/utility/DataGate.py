@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Utility
+
 """
 Utility to control the flow of data. Acts as a gate that can pass or block a data stream based on a boolean toggle.
 
@@ -18,6 +22,7 @@ try:
     ghenv.Component.Description = "Acts as a gate to either pass data through or block it completely by outputting an empty DataTree."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Utility"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

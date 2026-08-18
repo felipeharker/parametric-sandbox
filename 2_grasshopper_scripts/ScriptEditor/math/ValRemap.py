@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Math
+
 """
 Remaps a list of values to a new target domain defined by user inputs.
 
@@ -18,6 +22,7 @@ try:
     ghenv.Component.Description = "Remaps a list of values to a new target domain defined by user inputs."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Math"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

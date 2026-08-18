@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Geometry
+
 """
 Utility to trim curves with a region, closing the curves along the intersection boundary if they were originally closed.
 
@@ -19,6 +23,7 @@ try:
     ghenv.Component.Description = "Utility to trim curves with a region, closing the curves along the intersection boundary if they were originally closed."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Geometry"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

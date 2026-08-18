@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Document
+
 """
 Programmatically packages a specified Grasshopper component into a custom User Object.
 
@@ -24,6 +28,7 @@ try:
     ghenv.Component.Description = "Programmatically packages a specified Grasshopper component into a custom UserObject."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Document"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

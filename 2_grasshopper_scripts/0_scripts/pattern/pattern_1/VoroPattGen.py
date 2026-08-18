@@ -19,6 +19,7 @@ try:
     ghenv.Component.Description = "Generates a custom Voronoi pattern utilizing parallel multi-threading for maximum speed."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Pattern"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

@@ -14,6 +14,7 @@ try:
     ghenv.Component.Description = "Lists files in a directory."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Document"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

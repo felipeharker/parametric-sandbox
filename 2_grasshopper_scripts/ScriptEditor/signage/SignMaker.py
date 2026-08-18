@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Signage
+
 """
 Creates commercial signage channel letters, generating solid bodies and illumination faces.
 
@@ -22,6 +26,7 @@ try:
     ghenv.Component.Description = "Generates solid commercial signage channel letters with standoff and illumination faces."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Signage"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Document
+
 """
 Lists files in a directory.
 
@@ -16,6 +20,7 @@ try:
     ghenv.Component.Description = "Lists files in a directory."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Document"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Document
+
 """
 Updates Grasshopper parameters from a CSV file.
 
@@ -20,6 +24,7 @@ try:
     ghenv.Component.Description = "Updates Grasshopper parameters from a CSV file."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Document"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

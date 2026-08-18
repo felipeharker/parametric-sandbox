@@ -17,6 +17,7 @@ try:
     ghenv.Component.Description = "Draws a boundary box around a geometry."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Geometry"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

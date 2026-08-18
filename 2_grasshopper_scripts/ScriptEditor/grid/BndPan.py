@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Grid
+
 """
 Creates a grid of rectangular panels that perfectly fit within a bounding curve.
 
@@ -22,6 +26,7 @@ try:
     ghenv.Component.Description = "Creates a grid of rectangular panels that perfectly fit within a bounding curve."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Grid"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

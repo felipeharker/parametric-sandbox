@@ -15,6 +15,7 @@ try:
     ghenv.Component.Description = "Acts as a gate to either pass data through or block it completely by outputting an empty DataTree."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Utility"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

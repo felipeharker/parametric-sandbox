@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Pattern
+
 """
 Selects a 7-bit combination pattern based on an index.
 
@@ -17,6 +21,7 @@ try:
     ghenv.Component.Description = "Selects a 7-bit combination pattern based on an index."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Pattern"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

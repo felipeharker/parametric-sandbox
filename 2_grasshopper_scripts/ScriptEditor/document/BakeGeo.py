@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Document
+
 """
 Bakes input geometry to a specified layer in Rhino, with options to add or replace existing layer contents.
 
@@ -23,6 +27,7 @@ try:
     ghenv.Component.Description = "Bakes input geometry to a specified layer in Rhino, with options to add or replace existing layer contents."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Document"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

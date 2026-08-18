@@ -15,6 +15,7 @@ try:
     ghenv.Component.Description = "Rounds a list of numbers to the nearest value of a given step."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Math"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

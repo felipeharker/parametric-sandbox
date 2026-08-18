@@ -15,6 +15,7 @@ try:
     ghenv.Component.Description = "Calculates the luminance values of an image at specified points."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Math"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

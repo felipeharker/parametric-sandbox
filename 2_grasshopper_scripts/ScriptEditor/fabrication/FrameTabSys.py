@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Fabrication
+
 """
 Creates parametric tab perforations within a frame boundary for an aluminum panel system.
 
@@ -22,6 +26,7 @@ try:
     ghenv.Component.Description = "Creates parametric tab perforations within a frame boundary for an aluminum panel system."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Fabrication"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

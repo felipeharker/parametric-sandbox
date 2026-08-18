@@ -1,3 +1,7 @@
+#! python 3
+# category: CustomLib
+# subcategory: Pattern
+
 """
 Generates a custom Voronoi pattern within grid cells based on scaled inner boundaries and evaluated curve points.
 HIGH PERFORMANCE: Utilizes System.Threading.Tasks for concurrent multi-core processing.
@@ -25,6 +29,7 @@ try:
     ghenv.Component.Description = "Generates a custom Voronoi pattern utilizing parallel multi-threading for maximum speed."
     ghenv.Component.Category = "CustomLib"
     ghenv.Component.SubCategory = "Pattern"
+    ghenv.Component.Message = ""
 except NameError:
     pass
 

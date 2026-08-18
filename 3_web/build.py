@@ -8,6 +8,7 @@ def generate_site():
     web_dir = os.path.dirname(os.path.abspath(__file__))
     repo_root = os.path.dirname(web_dir)
     scripts_dir = os.path.join(repo_root, '2_grasshopper_scripts', '0_scripts')
+    script_editor_dir = os.path.join(repo_root, '2_grasshopper_scripts', 'ScriptEditor')
     userobjs_dir = os.path.join(repo_root, '2_grasshopper_scripts', '1_userobjects')
     samples_dir = os.path.join(repo_root, '2_grasshopper_scripts', '2_documentation', 'samples')
 
@@ -20,7 +21,7 @@ def generate_site():
     # 1. Create Zip file
     zip_path = os.path.join(downloads_dir, 'alexandria_app.zip')
     with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
-        for folder in [scripts_dir, userobjs_dir]:
+        for folder in [scripts_dir, script_editor_dir, userobjs_dir]:
             folder_name = os.path.basename(folder)
             for root, dirs, files in os.walk(folder):
                 for file in files:

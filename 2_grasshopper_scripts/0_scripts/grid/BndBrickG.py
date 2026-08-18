@@ -16,6 +16,8 @@ try:
     ghenv.Component.Name = "BoundBrickGrid"
     ghenv.Component.NickName = "BndBrickG"
     ghenv.Component.Description = "Creates a brick grid of individual closed rectangular cells within a region."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Grid"
 except NameError:
     pass
 

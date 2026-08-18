@@ -15,6 +15,8 @@ try:
     ghenv.Component.Name = "BoundDiaGrid"
     ghenv.Component.NickName = "BndDiaG"
     ghenv.Component.Description = "Creates a grid of individual closed diamond cells within a region."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Grid"
 except NameError:
     pass
 

@@ -12,6 +12,8 @@ try:
     ghenv.Component.Name = "VoronoiPatternSelector"
     ghenv.Component.NickName = "VoroPattSel"
     ghenv.Component.Description = "Selects a 7-bit combination pattern based on an index."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Pattern"
 except NameError:
     pass
 

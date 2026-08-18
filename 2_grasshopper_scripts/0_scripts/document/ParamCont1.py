@@ -13,6 +13,8 @@ try:
     ghenv.Component.Name = "ParamController1"
     ghenv.Component.NickName = "ParamCont1"
     ghenv.Component.Description = "Updates Grasshopper parameters from a CSV file."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Document"
 except NameError:
     pass
 

@@ -15,6 +15,8 @@ try:
     ghenv.Component.Name = "ValueRemapMultiplePoints"
     ghenv.Component.NickName = "ValRemapMultiPt"
     ghenv.Component.Description = "Remaps the shortest distances between a list of points and multiple attractor points to a new target domain."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Math"
 except NameError:
     pass
 

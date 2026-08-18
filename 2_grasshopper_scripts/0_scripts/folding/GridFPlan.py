@@ -19,6 +19,8 @@ try:
     ghenv.Component.Name = "GridFoldPlanar"
     ghenv.Component.NickName = "GridFPlan"
     ghenv.Component.Description = "Creates folded 3D gridded geometries efficiently."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Folding"
 except NameError:
     pass
 

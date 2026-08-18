@@ -13,6 +13,8 @@ try:
     ghenv.Component.Name = "StepRounding"
     ghenv.Component.NickName = "StepRound"
     ghenv.Component.Description = "Rounds a list of numbers to the nearest value of a given step."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Math"
 except NameError:
     pass
 

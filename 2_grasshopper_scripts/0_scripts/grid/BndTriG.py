@@ -15,6 +15,8 @@ try:
     ghenv.Component.Name = "BoundTriGrid"
     ghenv.Component.NickName = "BndTriG"
     ghenv.Component.Description = "Creates a grid of individual closed triangular cells within a region."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Grid"
 except NameError:
     pass
 

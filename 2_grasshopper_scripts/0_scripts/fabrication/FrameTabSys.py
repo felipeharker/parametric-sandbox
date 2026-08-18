@@ -19,6 +19,8 @@ try:
     ghenv.Component.Name = "FrameTabSystem"
     ghenv.Component.NickName = "FrmTab"
     ghenv.Component.Description = "Creates parametric tab perforations within a frame boundary for an aluminum panel system."
+    ghenv.Component.Category = "CustomLib"
+    ghenv.Component.SubCategory = "Fabrication"
 except NameError:
     pass
 
